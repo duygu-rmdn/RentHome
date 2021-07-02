@@ -1,5 +1,3 @@
-using System;
-
 namespace RentHome.Models
 {
     public class ErrorViewModel
