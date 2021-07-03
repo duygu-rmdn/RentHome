@@ -1,15 +1,29 @@
 ﻿namespace RentHome.Web.Controllers
 {
     using System.Diagnostics;
+    using System.Linq;
 
     using Microsoft.AspNetCore.Mvc;
+    using RentHome.Data;
+    using RentHome.Data.Common.Repositories;
+    using RentHome.Data.Models;
+    using RentHome.Services.Data;
     using RentHome.Web.ViewModels;
+    using RentHome.Web.ViewModels.Home;
 
     public class HomeController : BaseController
     {
+        private readonly IGetCountService getCountService;
+
+        public HomeController(IGetCountService getCountService)
+        {
+            this.getCountService = getCountService;
+        }
+
         public IActionResult Index()
         {
-            return this.View();
+            var viewModel = this.getCountService.GetCounts();
+            return this.View(viewModel);
         }
 
         public IActionResult Privacy()

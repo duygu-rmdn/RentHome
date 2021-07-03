@@ -1,9 +1,16 @@
 ﻿@using RentHome.Common
+@model RentHome.Web.ViewModels.Home.IndexViewModel
 @{
     this.ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>We have:</p>
+    <div class="col-md-4 offset-4">
+        <ul class="list-group">
+            <li class="list-group-item">Countries: @Model.CountriesCount</li>
+            <li class="list-group-item">Cities: @Model.CitiesCount</li>
+        </ul>
+    </div>
 </div>
