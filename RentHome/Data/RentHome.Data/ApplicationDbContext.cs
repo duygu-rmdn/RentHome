@@ -23,6 +23,20 @@
         {
         }
 
+        public DbSet<Property> Properties { get; set; }
+
+        public DbSet<City> Cities { get; set; }
+
+        public DbSet<Country> Countries { get; set; }
+
+        public DbSet<Contract> Contracts { get; set; }
+
+        public DbSet<Rental> Rentals { get; set; }
+
+        public DbSet<Request> Requests { get; set; }
+
+        public DbSet<CloudImage> CloudImages { get; set; }
+
         public DbSet<Setting> Settings { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
@@ -47,9 +61,33 @@
         protected override void OnModelCreating(ModelBuilder builder)
         {
             // Needed for Identity models configuration
+            builder.Entity<Rental>()
+                   .HasOne(r => r.Tenant)
+                   .WithMany(t => t.Rentals)
+                   .HasForeignKey(r => r.TenantId)
+                   .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<ApplicationUser>()
+                   .HasMany(u => u.Rentals)
+                   .WithOne(r => r.Tenant)
+                   .HasForeignKey(r => r.TenantId)
+                   .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Property>()
+                   .HasOne(h => h.Manager)
+                   .WithMany(m => m.ManagedProperties)
+                   .HasForeignKey(h => h.ManagerId)
+                   .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<ApplicationUser>()
+                   .HasMany(u => u.ManagedProperties)
+                   .WithOne(h => h.Manager)
+                   .HasForeignKey(h => h.ManagerId)
+                   .OnDelete(DeleteBehavior.Restrict);
+
             base.OnModelCreating(builder);
 
-            this.ConfigureUserIdentityRelations(builder);
+            ConfigureUserIdentityRelations(builder);
 
             EntityIndexesConfiguration.Configure(builder);
 
@@ -80,8 +118,29 @@
         }
 
         // Applies configurations
-        private void ConfigureUserIdentityRelations(ModelBuilder builder)
-             => builder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
+        private static void ConfigureUserIdentityRelations(ModelBuilder builder)
+        {
+            builder.Entity<ApplicationUser>()
+                .HasMany(e => e.Claims)
+                .WithOne()
+                .HasForeignKey(e => e.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<ApplicationUser>()
+                .HasMany(e => e.Logins)
+                .WithOne()
+                .HasForeignKey(e => e.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<ApplicationUser>()
+                .HasMany(e => e.Roles)
+                .WithOne()
+                .HasForeignKey(e => e.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+        }
 
         private void ApplyAuditInfoRules()
         {

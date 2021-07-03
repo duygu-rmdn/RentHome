@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\RentHome.Common\RentHome.Common.csproj" />
     <ProjectReference Include="..\RentHome.Data.Common\RentHome.Data.Common.csproj" />
   </ItemGroup>
   
