@@ -1,0 +1,59 @@
+﻿@model RentHome.Web.ViewModels.Properties.CreatePropertyInputModel
+@using RentHome.Data.Models.Enums
+
+@{
+    this.ViewData["Title"] = "Add new Property";
+}
+
+<h1>Add new property</h1>
+
+<form method="post" class="col-md-6 offset-md-3">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control" row="5"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Address"></label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Status"></label>
+        <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<PropertyStatus>().OrderBy(x => x.Value)" placeholder="Status...">></select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Category">Category</label>
+        <select asp-for="Category" class="form-control" asp-items="Html.GetEnumSelectList<PropertyCategory>().OrderBy(x => x.Value)" placeholder="Category..."></select>
+        <span asp-validation-for="Category" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CountryId"></label>
+        <select asp-for="@Model.CountryId"
+                id="CountryId"
+                asp-items="@(new SelectList(Model.CountryList, "Id", "Name"))"
+                class="form-control">
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="CityId"></label>
+        <select asp-for="@Model.CityId"
+                id="CountryId"
+                asp-items="@(new SelectList(Model.CityList, "Id", "Name"))"
+                class="form-control">
+        </select>
+    </div>
+    <input type="submit" class="btn btn-primary" />
+</form>
