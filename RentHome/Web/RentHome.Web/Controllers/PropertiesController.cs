@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using RentHome.Services.Data;
     using RentHome.Web.ViewModels.Properties;
 
@@ -20,6 +21,14 @@
             this.cityService = cityService;
             this.countryService = countryService;
             this.propertyService = propertyService;
+        }
+
+        [ActionName("GetCity")]
+        public async Task<IActionResult> GetCityAsync(int id)
+        {
+            var model = await this.cityService.AllCitiesByCountryAsync(id);
+
+            return this.Json(new SelectList(model, "Id", "Name"));
         }
 
         public async Task<IActionResult> Create()

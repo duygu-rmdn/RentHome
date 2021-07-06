@@ -50,10 +50,37 @@
     <div class="form-group">
         <label asp-for="CityId"></label>
         <select asp-for="@Model.CityId"
-                id="CountryId"
-                asp-items="@(new SelectList(Model.CityList, "Id", "Name"))"
-                class="form-control">
-        </select>
+                name="CityId"
+                id="CityId"
+                asp-items="@(new SelectList(string.Empty, "Id", "Name"))"
+                class="form-control"></select>
     </div>
     <input type="submit" class="btn btn-primary" />
 </form>
+
+@section Scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            getCity();
+            $('#CountryId').change(function () {
+                getCity();
+            });
+        });
+        function getCity() {
+            var url = '@Url.Content("~/")' + "Properties/GetCity";
+
+            var ddlSource = '#CountryId';
+            $.getJSON(url, { id: $(ddlSource).val() }, function (data) {
+                var items = '';
+                $('#CityId').empty();
+                $.each(data, function (i, city) {
+                    items += "<option value ='" + city.value + "'>" + city.text + "</option>";
+                });
+                $('#CityId').html(items);
+            })
+        }
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
