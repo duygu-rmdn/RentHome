@@ -47,7 +47,7 @@
 
         public string OwnerId { get; set; }
 
-        [Required]
+        // [Required]
         [ForeignKey("OwnerId")]
         public virtual ApplicationUser Owner { get; set; }
 

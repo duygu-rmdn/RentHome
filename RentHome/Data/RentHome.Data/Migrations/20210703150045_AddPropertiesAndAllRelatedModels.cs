@@ -28,7 +28,7 @@
                 type: "nvarchar(50)",
                 maxLength: 50,
                 nullable: false,
-                defaultValue: "");
+                defaultValue: string.Empty);
 
             migrationBuilder.AddColumn<string>(
                 name: "LastName",
@@ -36,7 +36,7 @@
                 type: "nvarchar(50)",
                 maxLength: 50,
                 nullable: false,
-                defaultValue: "");
+                defaultValue: string.Empty);
 
             migrationBuilder.AddColumn<int>(
                 name: "ProfilePicId",

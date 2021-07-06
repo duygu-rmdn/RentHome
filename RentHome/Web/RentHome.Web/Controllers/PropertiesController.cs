@@ -1,21 +1,25 @@
 ﻿namespace RentHome.Web.Controllers
 {
+    using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Mvc;
     using RentHome.Services.Data;
     using RentHome.Web.ViewModels.Properties;
-    using System.Threading.Tasks;
 
     public class PropertiesController : Controller
     {
         private readonly ICityService cityService;
         private readonly ICountryService countryService;
+        private readonly IPropertyService propertyService;
 
         public PropertiesController(
             ICityService cityService,
-            ICountryService countryService)
+            ICountryService countryService,
+            IPropertyService propertyService)
         {
             this.cityService = cityService;
             this.countryService = countryService;
+            this.propertyService = propertyService;
         }
 
         public async Task<IActionResult> Create()
@@ -33,15 +37,16 @@
         }
 
         [HttpPost]
-        public IActionResult Create(CreatePropertyInputModel input)
+        public async Task<IActionResult> Create(CreatePropertyInputModel input)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.View();
             }
 
+            await this.propertyService.CreateAsync(input);
+
             // TODO: redirect to Property info page
-            // TODO: Create Property using service method
             return this.Redirect("/");
         }
     }

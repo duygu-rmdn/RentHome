@@ -67,6 +67,7 @@
             services.AddTransient<IGetCountService, GetCountService>();
             services.AddTransient<ICityService, CityService>();
             services.AddTransient<ICountryService, CountryService>();
+            services.AddTransient<IPropertyService, PropertyService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
