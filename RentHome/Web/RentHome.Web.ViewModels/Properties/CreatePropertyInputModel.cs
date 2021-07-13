@@ -40,8 +40,10 @@
         [EnumDataType(typeof(PropertyCategory))]
         public PropertyCategory Category { get; set; }
 
+        [Display(Name = "Country")]
         public int CountryId { get; set; }
 
+        [Display(Name = "City")]
         public int CityId { get; set; }
 
         public IEnumerable<CityListServiceModel> CityList { get; set; }
