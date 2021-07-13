@@ -15,7 +15,7 @@
             this.propertyRepository = propertyRepository;
         }
 
-        public async Task CreateAsync(CreatePropertyInputModel input)
+        public async Task CreateAsync(CreatePropertyInputModel input, string userId)
         {
             var property = new Property
             {
@@ -26,6 +26,7 @@
                 Category = input.Category,
                 Price = input.Price,
                 CityId = input.CityId,
+                OwnerId = userId,
             };
 
             await this.propertyRepository.AddAsync(property);

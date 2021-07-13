@@ -38,7 +38,7 @@
         [DataType(DataType.Date)]
         public DateTime Birthdate { get; set; }
 
-        public CloudImage ProfilePic { get; set; }
+        public Image ProfilePic { get; set; }
 
         public DateTime RegisteredAt { get; set; } = DateTime.UtcNow;
 

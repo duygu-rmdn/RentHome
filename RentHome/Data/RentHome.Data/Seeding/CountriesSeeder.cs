@@ -16,8 +16,9 @@
             }
 
             await dbContext.Countries.AddAsync(new Country { Name = "Bulgaria", Code = "BG" });
-            await dbContext.Countries.AddAsync(new Country { Name = "London", Code = "GB" });
+            await dbContext.Countries.AddAsync(new Country { Name = "Italy", Code = "IT" });
             await dbContext.Countries.AddAsync(new Country { Name = "Greece", Code = "GR" });
+            await dbContext.Countries.AddAsync(new Country { Name = "Turkey", Code = "TR" });
 
             await dbContext.SaveChangesAsync();
         }

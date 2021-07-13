@@ -35,7 +35,7 @@
 
         public DbSet<Request> Requests { get; set; }
 
-        public DbSet<CloudImage> CloudImages { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         public DbSet<Setting> Settings { get; set; }
 

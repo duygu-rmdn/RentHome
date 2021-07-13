@@ -10,8 +10,8 @@ using RentHome.Data;
 namespace RentHome.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210703150045_AddPropertiesAndAllRelatedModels")]
-    partial class AddPropertiesAndAllRelatedModels
+    [Migration("20210713195532_InicialCreate")]
+    partial class InicialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -237,8 +237,8 @@ namespace RentHome.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("ProfilePicId")
-                        .HasColumnType("int");
+                    b.Property<string>("ProfilePicId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("RegisteredAt")
                         .HasColumnType("datetime2");
@@ -288,29 +288,6 @@ namespace RentHome.Data.Migrations
                     b.HasIndex("CountryId");
 
                     b.ToTable("Cities");
-                });
-
-            modelBuilder.Entity("RentHome.Data.Models.CloudImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("PicturePublicId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PictureUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PropertyId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PropertyId");
-
-                    b.ToTable("CloudImages");
                 });
 
             modelBuilder.Entity("RentHome.Data.Models.Contract", b =>
@@ -364,6 +341,24 @@ namespace RentHome.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Countries");
+                });
+
+            modelBuilder.Entity("RentHome.Data.Models.Image", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Extention")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PropertyId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PropertyId");
+
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("RentHome.Data.Models.Property", b =>
@@ -576,7 +571,7 @@ namespace RentHome.Data.Migrations
 
             modelBuilder.Entity("RentHome.Data.Models.ApplicationUser", b =>
                 {
-                    b.HasOne("RentHome.Data.Models.CloudImage", "ProfilePic")
+                    b.HasOne("RentHome.Data.Models.Image", "ProfilePic")
                         .WithMany()
                         .HasForeignKey("ProfilePicId");
 
@@ -594,13 +589,6 @@ namespace RentHome.Data.Migrations
                     b.Navigation("Country");
                 });
 
-            modelBuilder.Entity("RentHome.Data.Models.CloudImage", b =>
-                {
-                    b.HasOne("RentHome.Data.Models.Property", null)
-                        .WithMany("Images")
-                        .HasForeignKey("PropertyId");
-                });
-
             modelBuilder.Entity("RentHome.Data.Models.Contract", b =>
                 {
                     b.HasOne("RentHome.Data.Models.ApplicationUser", "Manager")
@@ -614,6 +602,15 @@ namespace RentHome.Data.Migrations
                     b.Navigation("Manager");
 
                     b.Navigation("Rental");
+                });
+
+            modelBuilder.Entity("RentHome.Data.Models.Image", b =>
+                {
+                    b.HasOne("RentHome.Data.Models.Property", "Property")
+                        .WithMany("Images")
+                        .HasForeignKey("PropertyId");
+
+                    b.Navigation("Property");
                 });
 
             modelBuilder.Entity("RentHome.Data.Models.Property", b =>

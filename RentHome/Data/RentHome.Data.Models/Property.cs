@@ -15,7 +15,7 @@
         public Property()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Images = new HashSet<CloudImage>();
+            this.Images = new HashSet<Image>();
         }
 
         public string Id { get; set; }
@@ -47,7 +47,7 @@
 
         public string OwnerId { get; set; }
 
-        // [Required]
+        [Required]
         [ForeignKey("OwnerId")]
         public virtual ApplicationUser Owner { get; set; }
 
@@ -61,6 +61,6 @@
 
         public virtual City City { get; set; }
 
-        public ICollection<CloudImage> Images { get; set; }
+        public ICollection<Image> Images { get; set; }
     }
 }
