@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using Microsoft.AspNetCore.Http;
     using RentHome.Data.Models.Enums;
     using RentHome.Web.ViewModels.City;
     using RentHome.Web.ViewModels.Country;
@@ -45,6 +46,9 @@
 
         [Display(Name = "City")]
         public int CityId { get; set; }
+
+        [Required]
+        public IEnumerable<IFormFile> Images { get; set; }
 
         public IEnumerable<CityListServiceModel> CityList { get; set; }
 

@@ -7,7 +7,7 @@
 
 <h1>Add new property</h1>
 
-<form method="post" class="col-md-6 offset-md-3">
+<form method="post" class="col-md-6 offset-md-3" enctype="multipart/form-data">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="Name"></label>
@@ -54,6 +54,11 @@
                 id="CityId"
                 asp-items="@(new SelectList(string.Empty, "Id", "Name"))"
                 class="form-control"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Images"></label>
+        <input asp-for="Images" class="form-control" />
+        <span asp-validation-for="Images" class="text-danger"></span>
     </div>
     <input type="submit" class="btn btn-primary" />
 </form>

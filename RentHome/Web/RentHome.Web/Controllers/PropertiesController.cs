@@ -1,7 +1,9 @@
 ﻿namespace RentHome.Web.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,17 +16,20 @@
         private readonly ICityService cityService;
         private readonly ICountryService countryService;
         private readonly IPropertyService propertyService;
+        private readonly IWebHostEnvironment environment;
         private readonly UserManager<ApplicationUser> userManager;
 
         public PropertiesController(
             ICityService cityService,
             ICountryService countryService,
             IPropertyService propertyService,
+            IWebHostEnvironment environment,
             UserManager<ApplicationUser> userManager)
         {
             this.cityService = cityService;
             this.countryService = countryService;
             this.propertyService = propertyService;
+            this.environment = environment;
             this.userManager = userManager;
         }
 
@@ -55,11 +60,20 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View();
+                return this.View(input);
             }
 
             var user = await this.userManager.GetUserAsync(this.User);
-            await this.propertyService.CreateAsync(input, user.Id);
+
+            try
+            {
+                await this.propertyService.CreateAsync(input, user.Id, $"{this.environment.WebRootPath}/images");
+            }
+            catch (Exception ex)
+            {
+                this.ModelState.AddModelError(string.Empty, ex.Message);
+                return this.View(input);
+            }
 
             // TODO: redirect to Property info page
             return this.Redirect("/");
