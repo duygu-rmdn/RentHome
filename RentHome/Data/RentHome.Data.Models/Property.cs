@@ -61,6 +61,8 @@
 
         public virtual City City { get; set; }
 
+        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
+
         public ICollection<Image> Images { get; set; }
     }
 }

@@ -78,5 +78,15 @@
             // TODO: redirect to Property info page
             return this.Redirect("/");
         }
+
+        public IActionResult All(int id = 1)
+        {
+            var viewModel = new PropertiesListViewModel
+            {
+                PageNumber = id,
+                Properties = this.propertyService.GetAll(id, 12),
+            };
+            return this.View(viewModel);
+        }
     }
 }

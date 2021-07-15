@@ -1,6 +1,7 @@
 ﻿namespace RentHome.Services.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
@@ -56,6 +57,25 @@
 
             await this.propertyRepository.AddAsync(property);
             await this.propertyRepository.SaveChangesAsync();
+        }
+
+        public IEnumerable<PropertiesInListViewModel> GetAll(int page, int itemsPerPage = 12)
+        {
+            var properties = this.propertyRepository
+                .AllAsNoTracking()
+                .OrderBy(x => x.CreatedOn)
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .Select(x => new PropertiesInListViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Address = $"{x.City.Name}, {x.City.Country.Name}",
+                    CaregoryName = x.Category.ToString(),
+                    ImageUrl = "images/properties/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extention,
+                }).ToList();
+
+            return properties;
         }
     }
 }
