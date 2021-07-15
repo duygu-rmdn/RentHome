@@ -72,7 +72,7 @@
                     Name = x.Name,
                     Address = $"{x.City.Name}, {x.City.Country.Name}",
                     CaregoryName = x.Category.ToString(),
-                    ImageUrl = "images/properties/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extention,
+                    ImageUrl = "/images/properties/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extention,
                 }).ToList();
 
             return properties;
