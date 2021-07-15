@@ -4,19 +4,19 @@
 }
 <h1>@ViewData["Title"]</h1>
 <hr />
-<div class="row">
-    @foreach (var property in Model.Properties)
-    {
-        <div class="card col-md-3" style="width: 18rem;">
-            <img class="card-img-top" src="@property.ImageUrl" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">@property.Name</h5>
-                <p class="card-text">@property.CaregoryName in @property.Address</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+<div class="row  justify-content-center">
+        @foreach (var property in Model.Properties)
+        {
+            <div class="card col-md-3 mr-3 mt-3 pt-3" style="width: 18rem;">
+                <img class="card-img-top mr-2" src="@property.ImageUrl" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">@property.Name</h5>
+                    <p class="card-text">@property.CaregoryName in @property.Address</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
             </div>
-        </div>
-    }
-</div>
+        }
+    </div>
 <hr />
 
 <nav aria-label="...">
