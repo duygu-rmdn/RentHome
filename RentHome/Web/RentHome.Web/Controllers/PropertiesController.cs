@@ -81,10 +81,13 @@
 
         public IActionResult All(int id = 1)
         {
+            const int ItemsPerPage = 1;
             var viewModel = new PropertiesListViewModel
             {
                 PageNumber = id,
-                Properties = this.propertyService.GetAll(id, 12),
+                Properties = this.propertyService.GetAll(id, ItemsPerPage),
+                PropertiesCount = this.propertyService.GetCount(),
+                ItemsPerPage = ItemsPerPage,
             };
             return this.View(viewModel);
         }

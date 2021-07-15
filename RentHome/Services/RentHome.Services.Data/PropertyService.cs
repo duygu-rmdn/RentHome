@@ -63,7 +63,7 @@
         {
             var properties = this.propertyRepository
                 .AllAsNoTracking()
-                .OrderBy(x => x.CreatedOn)
+                .OrderByDescending(x => x.CreatedOn)
                 .Skip((page - 1) * itemsPerPage)
                 .Take(itemsPerPage)
                 .Select(x => new PropertiesInListViewModel
@@ -76,6 +76,11 @@
                 }).ToList();
 
             return properties;
+        }
+
+        public int GetCount()
+        {
+            return this.propertyRepository.All().Count();
         }
     }
 }

@@ -10,5 +10,7 @@
         Task CreateAsync(CreatePropertyInputModel input, string userId, string imagePath);
 
         IEnumerable<PropertiesInListViewModel> GetAll(int page, int itemsPerPage = 12);
+
+        int GetCount();
     }
 }
