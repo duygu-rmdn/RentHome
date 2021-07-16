@@ -2,8 +2,19 @@
 @{
     ViewData["Title"] = "All Properties";
 }
-<h1>@ViewData["Title"]</h1>
+<section class="breadcumb-area bg-img" style="background-image: url(https://wallpaperaccess.com/full/1126773.jpg);">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="breadcumb-content">
+                    <h3 class="breadcumb-title">Listings</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><br>
 <hr />
+<br>
 <div class="row  justify-content-center">
     @foreach (var property in Model.Properties)
     {

@@ -92,9 +92,10 @@
             return this.View(viewModel);
         }
 
-        public IActionResult Details(int id)
+        public IActionResult Details(string id)
         {
-            return this.View();
+            var viewModel = this.propertyService.GetSingleProperty(id);
+            return this.View(viewModel);
         }
     }
 }

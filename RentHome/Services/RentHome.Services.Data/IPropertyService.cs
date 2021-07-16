@@ -12,5 +12,7 @@
         IEnumerable<PropertiesInListViewModel> GetAll(int page, int itemsPerPage = 12);
 
         int GetCount();
+
+        SinglePropertyViewModel GetSingleProperty(string id);
     }
 }

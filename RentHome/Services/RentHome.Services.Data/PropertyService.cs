@@ -84,5 +84,28 @@
         {
             return this.propertyRepository.All().Count();
         }
+
+        public SinglePropertyViewModel GetSingleProperty(string id)
+        {
+            var property = this.propertyRepository
+                .AllAsNoTracking()
+                .Where(x => x.Id == id)
+                .Select(x => new SinglePropertyViewModel
+                {
+                    Name = x.Name,
+                    Address = $"{x.Address}, {x.City.Name}, {x.City.Country.Name}",
+                    CaregoryName = x.Category.ToString(),
+                    Price = x.Price,
+                    StatusName = x.Status.ToString(),
+                    Description = x.Description,
+                    OwnerEmail = x.Owner.Email,
+                    OwnerFirstName = x.Owner.FirstName,
+                    OwnerLastName = x.Owner.LastName,
+                    OwnerUsername = x.Owner.UserName,
+                    ImageUrl = "/images/properties/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extention,
+                }).FirstOrDefault();
+
+            return property;
+        }
     }
 }

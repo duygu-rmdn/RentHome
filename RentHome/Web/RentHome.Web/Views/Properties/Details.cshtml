@@ -1,4 +1,63 @@
-﻿@{
+﻿@model RentHome.Web.ViewModels.Properties.SinglePropertyViewModel
+@{
     this.ViewData["Title"] = "Details";
 }
-<h1>Details for single property - it is working</h1>
+<section class="breadcumb-area bg-img" style="background-image: url(https://c4.wallpaperflare.com/wallpaper/913/856/991/sea-luxury-homes-beach-swimming-pool-wallpaper-preview.jpg); ">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="breadcumb-content">
+                    <h3 class="breadcumb-title">Property</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<br>
+<hr />
+<section class="listings-content-wrapper section-padding-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!-- Single Listings Slides -->
+                <div class="single-listings-sliders owl-carousel">
+                    <img class="w-100" src="@Model.ImageUrl" alt="">
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+                <div class="listings-content">
+                    <!-- Price -->
+                    <div class="list-price">
+                        <p>$@Model.Price</p>
+                    </div>
+                    <h5>@Model.Name</h5>
+                    <p class="location"><img src="https://technext.github.io/south/img/icons/location.png" alt="">@Model.Address</p>
+                    <p>@Model.Description</p>
+                </div>
+                <h4>@Model.StatusName</h4> 
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="contact-realtor-wrapper">
+                    <div class="realtor-info">
+                        <div class="realtor---info">
+                            <h2>@Model.OwnerFirstName @Model.OwnerLastName</h2>
+                            <p>Owner</p>
+                            <h6>
+                                <span style="font-size: 1.2rem;">
+                                    <span style="color: #947054;">
+                                        <i class="far fa-user"></i>
+                                    </span>
+                                </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Model.OwnerUsername
+                            </h6>
+                            <h6><img src="https://technext.github.io/south/img/icons/envelope.png" alt=""> @Model.OwnerEmail</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
