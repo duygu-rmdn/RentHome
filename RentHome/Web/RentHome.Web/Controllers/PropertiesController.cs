@@ -81,7 +81,7 @@
 
         public IActionResult All(int id = 1)
         {
-            const int ItemsPerPage = 6;
+            const int ItemsPerPage = 9;
             var viewModel = new PropertiesListViewModel
             {
                 PageNumber = id,
@@ -90,6 +90,11 @@
                 ItemsPerPage = ItemsPerPage,
             };
             return this.View(viewModel);
+        }
+
+        public IActionResult Details(int id)
+        {
+            return this.View();
         }
     }
 }

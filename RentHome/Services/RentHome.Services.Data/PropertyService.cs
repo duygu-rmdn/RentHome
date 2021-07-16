@@ -72,6 +72,8 @@
                     Name = x.Name,
                     Address = $"{x.City.Name}, {x.City.Country.Name}",
                     CaregoryName = x.Category.ToString(),
+                    Price = x.Price,
+                    Description = x.Description.Substring(0, 70) + "...",
                     ImageUrl = "/images/properties/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extention,
                 }).ToList();
 
