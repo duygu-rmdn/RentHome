@@ -36,11 +36,10 @@
                     <h5>@Model.Name</h5>
                     <p class="location">
                         <img src="https://technext.github.io/south/img/icons/location.png" alt="">@Model.Address &nbsp;&nbsp;&nbsp;&nbsp;
-                        <span class="fa fa-star checked" data-vote="1"></span>
-                        <span class="fa fa-star checked" data-vote="2"></span>
-                        <span class="fa fa-star checked" data-vote="3"></span>
-                        <span class="fa fa-star" data-vote="4"></span>
-                        <span class="fa fa-star" data-vote="5"></span>
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            <span class="fa fa-star checked" data-vote="@i"></span>
+                        }
                         <span id="averageVoteValue">@Model.AverageVote.ToString("0.0")</span><span> / 5</span>
                     </p>
                     <p>@Model.Description</p>
