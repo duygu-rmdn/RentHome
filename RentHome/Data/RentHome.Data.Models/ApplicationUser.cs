@@ -19,6 +19,7 @@
             this.Rentals = new HashSet<Rental>();
             this.ManagedProperties = new HashSet<Property>();
             this.Contracts = new HashSet<Contract>();
+            this.Votes = new HashSet<Vote>();
 
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
@@ -59,6 +60,8 @@
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+
+        public ICollection<Vote> Votes { get; set; }
 
         // Audit info
         public DateTime CreatedOn { get; set; }

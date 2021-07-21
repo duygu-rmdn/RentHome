@@ -12,6 +12,10 @@ a {
     color: #0366d6;
 }
 
+.checked {
+    color: orange;
+}
+
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;

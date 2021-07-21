@@ -13,11 +13,15 @@
     public class PropertyService : IPropertyService
     {
         private readonly IRepository<Property> propertyRepository;
+        private readonly IVotesService votesService;
         private readonly string[] allowdedExtensions = new[] { "jpg", "png", "gif" };
 
-        public PropertyService(IRepository<Property> propertyRepository)
+        public PropertyService(
+            IRepository<Property> propertyRepository,
+            IVotesService votesService)
         {
             this.propertyRepository = propertyRepository;
+            this.votesService = votesService;
         }
 
         public async Task CreateAsync(CreatePropertyInputModel input, string userId, string imagePath)
@@ -92,6 +96,7 @@
                 .Where(x => x.Id == id)
                 .Select(x => new SinglePropertyViewModel
                 {
+                    Id = id,
                     Name = x.Name,
                     Address = $"{x.Address}, {x.City.Name}, {x.City.Country.Name}",
                     CaregoryName = x.Category.ToString(),
@@ -103,6 +108,7 @@
                     OwnerLastName = x.Owner.LastName,
                     OwnerUsername = x.Owner.UserName,
                     ImageUrl = "/images/properties/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extention,
+                    AverageVote = this.votesService.GetAverageVote(id),
                 }).FirstOrDefault();
 
             return property;

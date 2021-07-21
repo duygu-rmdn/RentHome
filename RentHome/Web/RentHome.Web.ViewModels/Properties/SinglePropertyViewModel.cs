@@ -27,5 +27,7 @@
         public string OwnerUsername { get; set; }
 
         public string OwnerEmail { get; set; }
+
+        public double AverageVote { get; set; }
     }
 }

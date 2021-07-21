@@ -16,6 +16,7 @@
         {
             this.Id = Guid.NewGuid().ToString();
             this.Images = new HashSet<Image>();
+            this.Votes = new HashSet<Vote>();
         }
 
         public string Id { get; set; }
@@ -64,5 +65,7 @@
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 
         public ICollection<Image> Images { get; set; }
+
+        public ICollection<Vote> Votes { get; set; }
     }
 }

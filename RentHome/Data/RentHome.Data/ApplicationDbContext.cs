@@ -37,6 +37,8 @@
 
         public DbSet<Image> Images { get; set; }
 
+        public DbSet<Vote> Votes { get; set; }
+
         public DbSet<Setting> Settings { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);

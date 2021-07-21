@@ -11,7 +11,7 @@
     using RentHome.Services.Data;
     using RentHome.Web.ViewModels.Properties;
 
-    public class PropertiesController : Controller
+    public class PropertiesController : BaseController
     {
         private readonly ICityService cityService;
         private readonly ICountryService countryService;
