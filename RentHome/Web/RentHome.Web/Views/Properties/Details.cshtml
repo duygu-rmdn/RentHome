@@ -36,10 +36,11 @@
                     <h5>@Model.Name</h5>
                     <p class="location">
                         <img src="https://technext.github.io/south/img/icons/location.png" alt="">@Model.Address &nbsp;&nbsp;&nbsp;&nbsp;
-                        @for (int i = 1; i <= 5; i++)
-                        {
-                            <span class="fa fa-star checked" data-vote="@i"></span>
-                        }
+                        <span id="starsForRate1" class="fa fa-star @if (0.5 <= Model.AverageVote) { <text>checked</text>}" data-vote="1"></span>
+                        <span id="starsForRate2" class="fa fa-star @if (1.5 <= Model.AverageVote) { <text>checked</text>}" data-vote="2"></span>
+                        <span id="starsForRate3" class="fa fa-star @if (2.5 <= Model.AverageVote) { <text>checked</text>}" data-vote="3"></span>
+                        <span id="starsForRate4" class="fa fa-star @if (3.5 <= Model.AverageVote) { <text>checked</text>}" data-vote="4"></span>
+                        <span id="starsForRate5" class="fa fa-star @if (4.5 <= Model.AverageVote) { <text>checked</text>}" data-vote="5"></span>
                         <span id="averageVoteValue">@Model.AverageVote.ToString("0.0")</span><span> / 5</span>
                     </p>
                     <p>@Model.Description</p>
@@ -86,6 +87,16 @@
                     },
                     success: function (data) {
                         $('#averageVoteValue').html(data.averageVote.toFixed(1))
+                        for (var i = 1; i <= 5; i++) {
+                            var item = $("#starsForRate" + i);
+                            if (i - 0.5 <= data.averageVote)
+                            {
+                                item.addClass("checked");
+                            }
+                            else {
+                                item.removeClass("checked");
+                            }
+                        }
                     },
                     contentType: 'application/json'
                 });
