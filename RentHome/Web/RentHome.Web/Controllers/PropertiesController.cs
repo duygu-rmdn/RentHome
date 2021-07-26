@@ -1,12 +1,15 @@
 ﻿namespace RentHome.Web.Controllers
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using RentHome.Data.Common.Repositories;
     using RentHome.Data.Models;
     using RentHome.Services.Data;
     using RentHome.Web.ViewModels.Properties;
@@ -16,6 +19,7 @@
         private readonly ICityService cityService;
         private readonly ICountryService countryService;
         private readonly IPropertyService propertyService;
+        private readonly IRepository<Property> propertyRepository;
         private readonly IWebHostEnvironment environment;
         private readonly UserManager<ApplicationUser> userManager;
 
@@ -23,12 +27,14 @@
             ICityService cityService,
             ICountryService countryService,
             IPropertyService propertyService,
+            IRepository<Property> propertyRepository,
             IWebHostEnvironment environment,
             UserManager<ApplicationUser> userManager)
         {
             this.cityService = cityService;
             this.countryService = countryService;
             this.propertyService = propertyService;
+            this.propertyRepository = propertyRepository;
             this.environment = environment;
             this.userManager = userManager;
         }
@@ -39,6 +45,27 @@
             var model = await this.cityService.AllCitiesByCountryAsync(id);
 
             return this.Json(new SelectList(model, "Id", "Name"));
+        }
+
+        [Authorize]
+        public IActionResult Edit(string id)
+        {
+            var inputModel = this.propertyService.GetById(id);
+            return this.View(inputModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, EditPropertyInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+            await this.propertyService.UpdateAsync(id, input);
+
+            return this.RedirectToAction(nameof(this.Details), new { id });
         }
 
         public async Task<IActionResult> Create()
@@ -75,8 +102,12 @@
                 return this.View(input);
             }
 
-            // TODO: redirect to Property info page
-            return this.Redirect("/");
+            string propertyId = this.propertyRepository.All()
+                .Where(x => x.Address == input.Address)
+                .Select(x => x.Id)
+                .FirstOrDefault();
+
+            return this.Redirect($"/Properties/Details/{propertyId}");
         }
 
         public IActionResult All(int id = 1)

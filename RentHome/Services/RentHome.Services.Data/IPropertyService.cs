@@ -16,5 +16,9 @@
         int GetCount();
 
         SinglePropertyViewModel GetSingleProperty(string id);
+
+        Task UpdateAsync(string id, EditPropertyInputModel input);
+
+        EditPropertyInputModel GetById(string id);
     }
 }

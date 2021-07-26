@@ -84,6 +84,24 @@
             return properties;
         }
 
+        public EditPropertyInputModel GetById(string id)
+        {
+            var property = this.propertyRepository
+                .AllAsNoTracking()
+                .Where(x => x.Id == id)
+                .Select(x => new EditPropertyInputModel
+                {
+                    Id = id,
+                    Name = x.Name,
+                    Category = x.Category,
+                    Price = x.Price,
+                    Status = x.Status,
+                    Description = x.Description,
+                }).FirstOrDefault();
+
+            return property;
+        }
+
         public int GetCount()
         {
             return this.propertyRepository.All().Count();
@@ -132,6 +150,19 @@
                 }).FirstOrDefault();
 
             return property;
+        }
+
+        public async Task UpdateAsync(string id, EditPropertyInputModel input)
+        {
+            var property = this.propertyRepository.All()
+                .FirstOrDefault(x => x.Id == id);
+            property.Name = input.Name;
+            property.Description = input.Description;
+            property.Price = input.Price;
+            property.Status = input.Status;
+            property.Category = input.Category;
+
+            await this.propertyRepository.SaveChangesAsync();
         }
     }
 }

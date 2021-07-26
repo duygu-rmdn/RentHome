@@ -1,0 +1,39 @@
+﻿@model RentHome.Web.ViewModels.Properties.EditPropertyInputModel
+@using RentHome.Data.Models.Enums
+
+@{
+    ViewData["TiTle"] = "Edit property";
+}
+
+<h1>@ViewData["TiTle"]</h1>
+
+<form method="post" class="col-md-6 offset-md-3" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control" row="5"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Status"></label>
+        <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<PropertyStatus>().OrderBy(x => x.Value)" placeholder="Status...">></select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Category">Category</label>
+        <select asp-for="Category" class="form-control" asp-items="Html.GetEnumSelectList<PropertyCategory>().OrderBy(x => x.Value)" placeholder="Category..."></select>
+        <span asp-validation-for="Category" class="text-danger"></span>
+    </div>
+    <input type="submit" class="btn btn-success" value="Save changes" />
+</form>
