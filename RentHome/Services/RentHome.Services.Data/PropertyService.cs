@@ -89,6 +89,26 @@
             return this.propertyRepository.All().Count();
         }
 
+        public IEnumerable<PropertiesInListViewModel> GetRandom(int count)
+        {
+            var properties = this.propertyRepository
+                .All()
+                .OrderBy(x => Guid.NewGuid())
+                .Take(count)
+                .Select(x => new PropertiesInListViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Address = $"{x.City.Name}, {x.City.Country.Name}",
+                    CaregoryName = x.Category.ToString(),
+                    Price = x.Price,
+                    Description = x.Description.Substring(0, 70) + "...",
+                    ImageUrl = "/images/properties/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extention,
+                }).ToList();
+
+            return properties;
+        }
+
         public SinglePropertyViewModel GetSingleProperty(string id)
         {
             var property = this.propertyRepository

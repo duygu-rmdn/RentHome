@@ -11,6 +11,8 @@
 
         IEnumerable<PropertiesInListViewModel> GetAll(int page, int itemsPerPage = 12);
 
+        IEnumerable<PropertiesInListViewModel> GetRandom(int count);
+
         int GetCount();
 
         SinglePropertyViewModel GetSingleProperty(string id);

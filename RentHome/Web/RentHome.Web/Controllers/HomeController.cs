@@ -14,15 +14,24 @@
     public class HomeController : BaseController
     {
         private readonly IGetCountService getCountService;
+        private readonly IPropertyService propertyService;
 
-        public HomeController(IGetCountService getCountService)
+        public HomeController(
+            IGetCountService getCountService,
+            IPropertyService propertyService)
         {
             this.getCountService = getCountService;
+            this.propertyService = propertyService;
         }
 
         public IActionResult Index()
         {
-            var viewModel = this.getCountService.GetCounts();
+            var viewModel = new IndexViewModel
+            {
+                CitiesCount = this.getCountService.GetCounts().CitiesCount,
+                CountriesCount = this.getCountService.GetCounts().CountriesCount,
+                RandomProperties = this.propertyService.GetRandom(3),
+            };
             return this.View(viewModel);
         }
 
