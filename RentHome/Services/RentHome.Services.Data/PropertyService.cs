@@ -63,10 +63,19 @@
             await this.propertyRepository.SaveChangesAsync();
         }
 
+        public async Task DeleteAsync(string id)
+        {
+            var property = this.propertyRepository.All().FirstOrDefault(x => x.Id == id);
+            property.IsDeleted = true;
+            property.DeletedOn = DateTime.UtcNow;
+            await this.propertyRepository.SaveChangesAsync();
+        }
+
         public IEnumerable<PropertiesInListViewModel> GetAll(int page, int itemsPerPage = 12)
         {
             var properties = this.propertyRepository
                 .AllAsNoTracking()
+                .Where(x => x.IsDeleted == false)
                 .OrderByDescending(x => x.CreatedOn)
                 .Skip((page - 1) * itemsPerPage)
                 .Take(itemsPerPage)

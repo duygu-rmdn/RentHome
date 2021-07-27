@@ -42,9 +42,12 @@
                         <span id="starsForRate4" class="fa fa-star @if (3.5 <= Model.AverageVote) { <text>checked</text>}" data-vote="4"></span>
                         <span id="starsForRate5" class="fa fa-star @if (4.5 <= Model.AverageVote) { <text>checked</text>}" data-vote="5"></span>
                         <span id="averageVoteValue">@Model.AverageVote.ToString("0.0")</span><span> / 5</span>
-                        <span class="single-meta">
-                            <a asp-controller="Properties" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning" >Edit</a>
-                        </span>
+                        @if (this.User.Identity.IsAuthenticated)
+                        {
+                            <span class="single-meta">
+                                <a asp-controller="Properties" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+                            </span>
+                        }
                     </p>
                     <p>@Model.Description</p>
                 </div>
@@ -68,6 +71,12 @@
                         </div>
                     </div>
                 </div>
+                <br>
+                @if (this.User.Identity.IsAuthenticated)
+                {
+                    <form id="deleteForm" asp-action="Delete" asp-route-id="@Model.Id"></form>
+                    <a class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">Delete</a>
+                }
             </div>
         </div>
     </div>
@@ -107,3 +116,23 @@
         });
     </script>
 }
+
+<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Delete property</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete "@Model.Name"?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-danger" onclick="deleteForm.submit()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>

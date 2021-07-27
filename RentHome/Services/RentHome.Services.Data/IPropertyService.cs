@@ -21,6 +21,6 @@
 
         EditPropertyInputModel GetById(string id);
 
-        // Task DeleteAsync(string id);
+        Task DeleteAsync(string id);
     }
 }

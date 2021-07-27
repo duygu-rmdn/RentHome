@@ -128,5 +128,13 @@
             var viewModel = this.propertyService.GetSingleProperty(id);
             return this.View(viewModel);
         }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Delete(string id)
+        {
+            await this.propertyService.DeleteAsync(id);
+            return this.RedirectToAction(nameof(this.All));
+        }
     }
 }
