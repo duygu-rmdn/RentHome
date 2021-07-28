@@ -21,9 +21,9 @@
         public PropertyCategory Category { get; set; }
 
         [Display(Name = "Country")]
-        public int? CountryId { get; set; }
+        public int CountryId { get; set; }
 
         [Display(Name = "City")]
-        public int? CityId { get; set; }
+        public int CityId { get; set; }
     }
 }

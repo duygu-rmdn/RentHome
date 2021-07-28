@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using RentHome.Web.ViewModels.Properties;
+    using RentHome.Web.ViewModels.Search;
 
     public interface IPropertyService
     {
@@ -22,5 +23,7 @@
         EditPropertyInputModel GetById(string id);
 
         Task DeleteAsync(string id);
+
+        IEnumerable<PropertiesInListViewModel> Search(SearchListInputModel input);
     }
 }

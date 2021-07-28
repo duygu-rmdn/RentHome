@@ -42,9 +42,9 @@
         {
             var viewModel = new ListViewModel()
             {
-                // todo
+                Properties = this.propertyService.Search(input),
             };
-            return this.View();
+            return this.View(viewModel);
         }
     }
 }
