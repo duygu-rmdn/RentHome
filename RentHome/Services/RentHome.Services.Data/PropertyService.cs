@@ -120,6 +120,7 @@
         {
             var properties = this.propertyRepository
                 .All()
+                .Where(x => x.IsDeleted == false)
                 .OrderBy(x => Guid.NewGuid())
                 .Take(count)
                 .Select(x => new PropertiesInListViewModel
