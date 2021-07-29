@@ -17,7 +17,6 @@
     using RentHome.Data.Repositories;
     using RentHome.Data.Seeding;
     using RentHome.Services.Data;
-    using RentHome.Services.Messaging;
 
     public static class Program
     {
@@ -78,7 +77,6 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
         }
     }
