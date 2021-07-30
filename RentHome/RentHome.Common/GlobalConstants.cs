@@ -3,6 +3,7 @@
     public static class GlobalConstants
     {
         public const string SystemName = "RentHome";
+        public const string SystemEmail = "renthome997@gmail.com";
 
         public const string AdministratorRoleName = "Administrator";
 
@@ -32,6 +33,12 @@
         public const int RequestDocumentMaxSize = 2 * 1024 * 1024;
 
         public const int CountryCodeLength = 2;
+
+        public const int MessageMinLenght = 10;
+        public const int MessageMaxLenght = 1000;
+
+        public const int SubjectMinLenght = 10;
+        public const int SubjectMaxLenght = 50;
 
         // TempData and Messages
         public const string TitleTooLong = "The title must be less than {1} characters long";

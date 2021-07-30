@@ -69,6 +69,27 @@
                             </h6>
                             <h6><img src="https://technext.github.io/south/img/icons/envelope.png" alt=""> @Model.OwnerEmail</h6>
                         </div>
+                        <div class="realtor--contact-form">
+                            <form method="post">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" asp-for="Contact.YourName" id="contact-name" placeholder="Your Name">
+                                    <span asp-validation-for="Contact.YourName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" asp-for="Contact.YourEmail" id="contact-email" placeholder="Your Email">
+                                    <span asp-validation-for="Contact.YourEmail" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" asp-for="Contact.Subject" id="contact-name" placeholder="Subject">
+                                    <span asp-validation-for="Contact.Subject" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="form-control" asp-for="Contact.Message" id="message" cols="30" rows="10" placeholder="Your Message"></textarea>
+                                    <span asp-validation-for="Contact.Message" class="text-danger"></span>
+                                </div>
+                                <button type="submit" class="btn south-btn">Send Message</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <br>

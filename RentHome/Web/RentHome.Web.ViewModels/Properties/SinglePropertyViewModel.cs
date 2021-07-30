@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
 
+    using RentHome.Web.ViewModels.ContactUs;
+
     public class SinglePropertyViewModel
     {
         public string Id { get; set; }
@@ -29,5 +31,7 @@
         public string OwnerEmail { get; set; }
 
         public double AverageVote { get; set; }
+
+        public ContactInputModel Contact { get; set; }
     }
 }

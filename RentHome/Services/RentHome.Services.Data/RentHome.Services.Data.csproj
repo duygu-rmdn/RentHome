@@ -23,6 +23,7 @@
     <ProjectReference Include="..\..\Data\RentHome.Data.Models\RentHome.Data.Models.csproj" />
     <ProjectReference Include="..\..\Web\RentHome.Web.ViewModels\RentHome.Web.ViewModels.csproj" />
     <ProjectReference Include="..\RentHome.Services.Mapping\RentHome.Services.Mapping.csproj" />
+    <ProjectReference Include="..\RentHome.Services.Messaging\RentHome.Services.Messaging.csproj" />
   </ItemGroup>
 
 </Project>

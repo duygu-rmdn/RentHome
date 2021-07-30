@@ -12,6 +12,7 @@
     using RentHome.Data.Common.Repositories;
     using RentHome.Data.Models;
     using RentHome.Services.Data;
+    using RentHome.Web.ViewModels.ContactUs;
     using RentHome.Web.ViewModels.Properties;
 
     public class PropertiesController : BaseController
@@ -21,6 +22,7 @@
         private readonly IPropertyService propertyService;
         private readonly IRepository<Property> propertyRepository;
         private readonly IWebHostEnvironment environment;
+        private readonly IContactService contactService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public PropertiesController(
@@ -29,6 +31,7 @@
             IPropertyService propertyService,
             IRepository<Property> propertyRepository,
             IWebHostEnvironment environment,
+            IContactService contactService,
             UserManager<ApplicationUser> userManager)
         {
             this.cityService = cityService;
@@ -36,6 +39,7 @@
             this.propertyService = propertyService;
             this.propertyRepository = propertyRepository;
             this.environment = environment;
+            this.contactService = contactService;
             this.userManager = userManager;
         }
 
@@ -127,6 +131,21 @@
         {
             var viewModel = this.propertyService.GetSingleProperty(id);
             return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Details(SinglePropertyViewModel input, string id)
+        {
+            var result = input.Contact;
+
+            string ownerEmail = this.propertyRepository.All()
+                .Where(x => x.Id == id)
+                .Select(x => x.Owner.Email)
+                .FirstOrDefault();
+
+            await this.contactService.ContactWithOwner(result, ownerEmail);
+
+            return this.Redirect("/");
         }
 
         [HttpPost]
