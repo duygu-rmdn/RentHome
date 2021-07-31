@@ -1,7 +1,5 @@
 ﻿namespace RentHome.Services.Data
 {
-    using System.Threading.Tasks;
-
     using RentHome.Services.Messaging;
     using RentHome.Web.ViewModels.ContactUs;
 
@@ -9,33 +7,31 @@
 
     public class ContactService : IContactService
     {
-        private readonly IEmailSender emailSender;
+        private readonly IEmailSenderService emailSender;
 
-        public ContactService(IEmailSender emailSender)
+        public ContactService(IEmailSenderService emailSender)
         {
             this.emailSender = emailSender;
         }
 
-        public async Task Contact(ContactInputModel input)
+        public void Contact(ContactInputModel input)
         {
             var from = input.YourEmail;
-            var fromName = input.YourName;
             var to = SystemEmail;
             var subject = input.Subject;
             var html = input.Message;
 
-            await this.emailSender.SendEmailAsync(from, fromName, to, subject, html);
+            this.emailSender.SendMail(from, to, subject, html);
         }
 
-        public async Task ContactWithOwner(ContactInputModel input, string ownerEmail)
+        public void ContactWithOwner(ContactInputModel input, string ownerEmail)
         {
             var from = input.YourEmail;
-            var fromName = input.YourName;
             var to = ownerEmail;
             var subject = input.Subject;
             var html = input.Message;
 
-            await this.emailSender.SendEmailAsync(from, fromName, to, subject, html);
+            this.emailSender.SendMail(from, to, subject, html);
         }
     }
 }

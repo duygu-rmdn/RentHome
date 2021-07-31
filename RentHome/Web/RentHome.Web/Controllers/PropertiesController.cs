@@ -134,7 +134,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Details(SinglePropertyViewModel input, string id)
+        public IActionResult Details(SinglePropertyViewModel input, string id)
         {
             var result = input.Contact;
 
@@ -143,7 +143,7 @@
                 .Select(x => x.Owner.Email)
                 .FirstOrDefault();
 
-            await this.contactService.ContactWithOwner(result, ownerEmail);
+            this.contactService.ContactWithOwner(result, ownerEmail);
 
             return this.Redirect("/");
         }

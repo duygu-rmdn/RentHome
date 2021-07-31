@@ -1,13 +1,11 @@
 ﻿namespace RentHome.Services.Data
 {
-    using System.Threading.Tasks;
-
     using RentHome.Web.ViewModels.ContactUs;
 
     public interface IContactService
     {
-        Task Contact(ContactInputModel input);
+        void Contact(ContactInputModel input);
 
-        Task ContactWithOwner(ContactInputModel input, string ownerEmail);
+        void ContactWithOwner(ContactInputModel input, string ownerEmail);
     }
 }
