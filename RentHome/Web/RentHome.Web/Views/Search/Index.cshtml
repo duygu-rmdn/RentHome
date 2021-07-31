@@ -4,50 +4,50 @@
 @{
     this.ViewData["Title"] = "Search";
 }
+<div class="container">
+    <h1>Search for perfect property for you</h1>
 
-<h1>Search for perfect property for you</h1>
-
-<form asp-action="List" method="get" class="col-md-6 offset-md-3" enctype="multipart/form-data">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group">
-        <label asp-for="MinPrice"></label>
-        <input asp-for="MinPrice" class="form-control" />
-        <span asp-validation-for="MinPrice" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="MaxPrice"></label>
-        <input asp-for="MaxPrice" class="form-control" />
-        <span asp-validation-for="MaxPrice" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Status"></label>
-        <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<PropertyStatus>().OrderBy(x => x.Value)" placeholder="Status...">></select>
-        <span asp-validation-for="Status" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Category">Category</label>
-        <select asp-for="Category" class="form-control" asp-items="Html.GetEnumSelectList<PropertyCategory>().OrderBy(x => x.Value)" placeholder="Category..."></select>
-        <span asp-validation-for="Category" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="CountryId"></label>
-        <select asp-for="@Model.CountryId"
-                id="CountryId"
-                asp-items="@(new SelectList(Model.CountryList, "Id", "Name"))"
-                class="form-control">
-        </select>
-    </div>
-    <div class="form-group">
-        <label asp-for="CityId"></label>
-        <select asp-for="@Model.CityId"
-                name="CityId"
-                id="CityId"
-                asp-items="@(new SelectList(string.Empty, "Id", "Name"))"
-                class="form-control"></select>
-    </div>
-    <input type="submit" class="btn btn-primary" />
-</form>
-
+    <form asp-action="List" method="get" class="col-md-6 offset-md-3" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="MinPrice"></label>
+            <input asp-for="MinPrice" class="form-control" />
+            <span asp-validation-for="MinPrice" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MaxPrice"></label>
+            <input asp-for="MaxPrice" class="form-control" />
+            <span asp-validation-for="MaxPrice" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Status"></label>
+            <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<PropertyStatus>().OrderBy(x => x.Value)" placeholder="Status...">></select>
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Category">Category</label>
+            <select asp-for="Category" class="form-control" asp-items="Html.GetEnumSelectList<PropertyCategory>().OrderBy(x => x.Value)" placeholder="Category..."></select>
+            <span asp-validation-for="Category" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CountryId"></label>
+            <select asp-for="@Model.CountryId"
+                    id="CountryId"
+                    asp-items="@(new SelectList(Model.CountryList, "Id", "Name"))"
+                    class="form-control">
+            </select>
+        </div>
+        <div class="form-group">
+            <label asp-for="CityId"></label>
+            <select asp-for="@Model.CityId"
+                    name="CityId"
+                    id="CityId"
+                    asp-items="@(new SelectList(string.Empty, "Id", "Name"))"
+                    class="form-control"></select>
+        </div>
+        <input type="submit" class="btn btn-primary" />
+    </form>
+</div>
 @section Scripts {
 
     <script type="text/javascript">

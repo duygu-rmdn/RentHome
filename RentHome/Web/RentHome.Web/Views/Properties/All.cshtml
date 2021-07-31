@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "All Properties";
 }
-<section class="breadcumb-area bg-img" style="background-image: url(https://wallpaperaccess.com/full/1126773.jpg);">
+<section class="breadcumb-area bg-img call-to-action-area bg-fixed bg-overlay-black" style="background-image: url(https://wallpaperaccess.com/full/1126773.jpg);">
     <div class="container h-100">
         <div class="row h-100 align-items-center">
             <div class="col-12">
@@ -15,64 +15,65 @@
 </section><br>
 <hr />
 <br>
-<div class="row  justify-content-center">
-    @foreach (var property in Model.Properties)
-    {
-        <!-- Single Featured Property -->
-        <div class="col-12 col-md-6 col-xl-4">
-            <div class="single-featured-property mb-50">
-                <!-- Property Thumbnail -->
-                <div class="property-thumb">
-                    <img src="@property.ImageUrl" alt="">
+<div class="container">
+    <div class="row  justify-content-center">
+        @foreach (var property in Model.Properties)
+        {
+            <!-- Single Featured Property -->
+            <div class="col-12 col-md-6 col-xl-4">
+                <div class="single-featured-property mb-50">
+                    <!-- Property Thumbnail -->
+                    <div class="property-thumb">
+                        <img src="@property.ImageUrl" alt="">
 
-                    <div class="tag">
-                        <span>For Sale</span>
+                        <div class="tag">
+                            <span>For Sale</span>
+                        </div>
+                        <div class="list-price">
+                            <p>$@property.Price</p>
+                        </div>
                     </div>
-                    <div class="list-price">
-                        <p>$@property.Price</p>
+                    <!-- Property Content -->
+                    <div class="property-content">
+                        <h5>@property.Name</h5>
+                        <p class="location"><img src="https://technext.github.io/south/img/icons/location.png" alt="">@property.Address</p>
+                        <p>@property.Description</p>
+                        <a class="btn south-btn" asp-area="" asp-controller="Properties" asp-action="Details" asp-route-id="@property.Id">View Details</a>
                     </div>
-                </div>
-                <!-- Property Content -->
-                <div class="property-content">
-                    <h5>@property.Name</h5>
-                    <p class="location"><img src="https://technext.github.io/south/img/icons/location.png" alt="">@property.Address</p>
-                    <p>@property.Description</p>
-                    <a class="btn south-btn" asp-area="" asp-controller="Properties" asp-action="Details" asp-route-id="@property.Id">View Details</a>
                 </div>
             </div>
-        </div>
-     }
+        }
+    </div>
+    <hr />
+
+    <nav aria-label="...">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @if (!Model.HasPreviousPage) { <text>disabled</text>}">
+                <a class="page-link" asp-action="All" asp-route-id="@Model.PreviousPageNumber">&laquo;</a>
+            </li>
+            @for (int i = Model.PageNumber - 2; i < Model.PageNumber; i++)
+            {
+                @if (i > 0)
+                {
+                    <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">@i</a></li>
+                }
+            }
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">
+                    @Model.PageNumber
+                    <span class="sr-only">(current)</span>
+                </span>
+            </li>
+            @for (int i = Model.PageNumber + 1; i < Model.PageNumber + 3; i++)
+            {
+                @if (i <= Model.PagesCount)
+                {
+                    <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">@i</a></li>
+                }
+            }
+            <li class="page-item @if (!Model.HasNextPage) { <text>disabled</text>}">
+                <a class="page-link" asp-action="All" asp-route-id="@Model.NextPageNumber">&raquo;</a>
+            </li>
+        </ul>
+    </nav>
 </div>
-<hr />
-
-<nav aria-label="...">
-    <ul class="pagination justify-content-center">
-        <li class="page-item @if (!Model.HasPreviousPage) { <text>disabled</text>}">
-            <a class="page-link" asp-action="All" asp-route-id="@Model.PreviousPageNumber">&laquo;</a>
-        </li>
-        @for (int i = Model.PageNumber - 2; i < Model.PageNumber; i++)
-        {
-            @if (i > 0)
-            {
-                <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">@i</a></li>
-            }
-        }
-        <li class="page-item active" aria-current="page">
-            <span class="page-link">
-                @Model.PageNumber
-                <span class="sr-only">(current)</span>
-            </span>
-        </li>
-        @for (int i = Model.PageNumber + 1; i < Model.PageNumber + 3; i++)
-        {
-            @if (i <= Model.PagesCount)
-            {
-                <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">@i</a></li>
-            }
-        }
-        <li class="page-item @if (!Model.HasNextPage) { <text>disabled</text>}">
-            <a class="page-link" asp-action="All" asp-route-id="@Model.NextPageNumber">&raquo;</a>
-        </li>
-    </ul>
-</nav>
-

@@ -6,54 +6,55 @@
 }
 
 <h1>@ViewData["TiTle"]</h1>
+<div class="container">
+    <form method="post" class="col-md-6 offset-md-3" enctype="multipart/form-data" id="editForm">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="form-control" row="5"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Price"></label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Status"></label>
+            <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<PropertyStatus>().OrderBy(x => x.Value)" placeholder="Status...">></select>
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Category">Category</label>
+            <select asp-for="Category" class="form-control" asp-items="Html.GetEnumSelectList<PropertyCategory>().OrderBy(x => x.Value)" placeholder="Category..."></select>
+            <span asp-validation-for="Category" class="text-danger"></span>
+        </div>
+    </form>
 
-<form method="post" class="col-md-6 offset-md-3" enctype="multipart/form-data" id="editForm">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <input type="hidden" asp-for="Id" />
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description" class="form-control" row="5"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Price"></label>
-        <input asp-for="Price" class="form-control" />
-        <span asp-validation-for="Price" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Status"></label>
-        <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<PropertyStatus>().OrderBy(x => x.Value)" placeholder="Status...">></select>
-        <span asp-validation-for="Status" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Category">Category</label>
-        <select asp-for="Category" class="form-control" asp-items="Html.GetEnumSelectList<PropertyCategory>().OrderBy(x => x.Value)" placeholder="Category..."></select>
-        <span asp-validation-for="Category" class="text-danger"></span>
-    </div>
-</form>
+    <button type="submit" class="btn btn-success col-md-2 offset-md-5" data-toggle="modal" data-target="#modalEdit">Save changes</button>
 
-<button type="submit" class="btn btn-success col-md-2 offset-md-5" data-toggle="modal" data-target="#modalEdit">Save changes</button>
-
-<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Confirm edit</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Do you want to save changes?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="editForm.submit()">Save changes</button>
+    <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Confirm edit</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Do you want to save changes?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="editForm.submit()">Save changes</button>
+                </div>
             </div>
         </div>
     </div>
