@@ -3,7 +3,7 @@
     public static class GlobalConstants
     {
         public const string SystemName = "RentHome";
-        public const string SystemEmail = "renthome997@gmail.com";
+        public const string SystemEmail = "homerent325@gmail.com";
 
         public const string AdministratorRoleName = "Administrator";
 

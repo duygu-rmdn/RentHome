@@ -19,17 +19,17 @@
             var from = input.YourEmail;
             var to = SystemEmail;
             var subject = input.Subject;
-            var html = input.Message;
+            var html = "email from " + from + ": <br>" + input.Message;
 
             this.emailSender.SendMail(from, to, subject, html);
         }
 
         public void ContactWithOwner(ContactInputModel input, string ownerEmail)
         {
-            var from = input.YourEmail;
+            var from = SystemEmail;
             var to = ownerEmail;
             var subject = input.Subject;
-            var html = input.Message;
+            var html = "email from " + input.YourEmail + ": <br>" + input.Message;
 
             this.emailSender.SendMail(from, to, subject, html);
         }
