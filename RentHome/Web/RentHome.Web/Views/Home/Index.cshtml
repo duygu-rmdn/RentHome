@@ -46,13 +46,13 @@
 </div>
 <div class="text-center container">
     <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    <p>We have:</p>
+    @*<p>We have:</p>
     <div class="col-md-4 offset-4">
         <ul class="list-group">
             <li class="list-group-item">Countries: @Model.CountriesCount</li>
             <li class="list-group-item">Cities: @Model.CitiesCount</li>
         </ul>
-    </div>
+    </div>*@
 
     <div class="row  justify-content-center">
         @foreach (var property in Model.RandomProperties)
@@ -89,8 +89,8 @@
             <div class="col-12">
                 <div class="cta-content text-center">
                     <h2 class="wow fadeInUp" data-wow-delay="300ms">Are you looking for a place to rent?</h2>
-                    <h6 class="wow fadeInUp" data-wow-delay="400ms">Not sure where to go?</h6>    
-                    <h6 class="wow fadeInUp" data-wow-delay="400ms">Perfect! I'm flexible</h6>    
+                    <h6 class="wow fadeInUp" data-wow-delay="400ms">Not sure where to go?</h6>
+                    <h6 class="wow fadeInUp" data-wow-delay="400ms">Perfect! I'm flexible</h6>
                     <a asp-area="" asp-controller="Search" asp-action="Index" class="btn south-btn mt-50 wow fadeInUp" data-wow-delay="500ms">Search</a>
                 </div>
             </div>
@@ -98,9 +98,24 @@
     </div>
 </section>
 
-@section Scripts{
-    <script>
-                    //const div = document.querySelector('someId');
-                    //div.classList.remove('container');
-    </script>
-}
+<section class="south-editor-area d-flex align-items-center">
+    <!-- Editor Content -->
+    <div class="editor-content-area">
+        <!-- Section Heading -->
+        <div class="section-heading wow fadeInUp" data-wow-delay="250ms">
+            <img src="https://technext.github.io/south/img/icons/prize.png" alt="">
+            <h2>Duygu Ramadan</h2>
+            <p>Developer</p>
+        </div>
+        <p class="wow fadeInUp" data-wow-delay="500ms">Hello, I am Duygu Ramadan. I am 15 years old, my hometown is Asenovgrad, now I am going on 9th grade in High School of Mathematics "Acad. Kiril Popov". I started programming 1 year ago and currently I am working on my several projects. My favorite programming languages are C#, JavaScript, HTML, CSS.</p>
+        <div class="address wow fadeInUp" data-wow-delay="750ms">
+            <h6><img src="https://technext.github.io/south/img/icons/envelope.png" alt=""> duygumetin99@gmail.com</h6>
+            <i class="fab fa-github" style="font-size: 1.2rem; color: #947054;"></i><a href="https://github.com/duygu-rmdn">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;my git</a>
+        </div>
+    </div>
+
+    <!-- Editor Thumbnail -->
+    <div class="editor-thumbnail">
+        <img src="https://i.ibb.co/jr3KGCr/me.jpg" alt="">
+    </div>
+</section>
