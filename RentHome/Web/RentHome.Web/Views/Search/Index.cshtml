@@ -4,50 +4,88 @@
 @{
     this.ViewData["Title"] = "Search";
 }
-<div class="container">
-    <h1>Search for perfect property for you</h1>
+<section class="breadcumb-area bg-img call-to-action-area bg-fixed bg-overlay-black" style="background-image: url(https://feed-images.rewhosting.com/trestle_idx_rets/_cloud_media/property/residential/361859004-1-o.jpg);">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="breadcumb-content">
+                    <h3 class="breadcumb-title">SEARCH</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="south-search-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="advanced-search-form">
+                    <!-- Search Title -->
+                    <div class="search-title">
+                        <p>Search for your home</p>
+                    </div>
+                    <!-- Search Form -->
+                    <form asp-action="List" method="get" id="advanceSearch">
+                        <div class="row">
 
-    <form asp-action="List" method="get" class="col-md-6 offset-md-3" enctype="multipart/form-data">
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="MinPrice"></label>
-            <input asp-for="MinPrice" class="form-control" />
-            <span asp-validation-for="MinPrice" class="text-danger"></span>
+                            <div class="col-12 col-md-4 col-lg-3">
+                                <div class="form-group">
+                                    <input class="form-control" asp-for="MinPrice" placeholder="Min price">
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4 col-lg-3">
+                                <div class="form-group">
+                                    <input class="form-control" asp-for="MaxPrice" placeholder="Max price">
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4 col-lg-3">
+                                <div class="form-group">
+                                    <select asp-for="@Model.CountryId"
+                                            id="CountryId"
+                                            asp-items="@(new SelectList(Model.CountryList, "Id", "Name"))"
+                                            class="form-control">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4 col-lg-3">
+                                <div class="form-group">
+                                    <select asp-for="@Model.CityId"
+                                            id="CityId"
+                                            asp-items="@(new SelectList(Model.CityList, "Id", "Name"))"
+                                            class="form-control">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4 col-lg-3">
+                                <div class="form-group">
+                                    <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<PropertyStatus>().OrderBy(x => x.Value)" placeholder="Status..."></select>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4 col-xl-3">
+                                <div class="form-group">
+                                    <select asp-for="Category" class="form-control" asp-items="Html.GetEnumSelectList<PropertyCategory>().OrderBy(x => x.Value)" placeholder="Category..."></select>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4 col-lg-3"></div>
+
+                            <div class="form-group mb-0">
+                                <button type="submit" class="btn south-btn">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label asp-for="MaxPrice"></label>
-            <input asp-for="MaxPrice" class="form-control" />
-            <span asp-validation-for="MaxPrice" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Status"></label>
-            <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<PropertyStatus>().OrderBy(x => x.Value)" placeholder="Status...">></select>
-            <span asp-validation-for="Status" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Category">Category</label>
-            <select asp-for="Category" class="form-control" asp-items="Html.GetEnumSelectList<PropertyCategory>().OrderBy(x => x.Value)" placeholder="Category..."></select>
-            <span asp-validation-for="Category" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="CountryId"></label>
-            <select asp-for="@Model.CountryId"
-                    id="CountryId"
-                    asp-items="@(new SelectList(Model.CountryList, "Id", "Name"))"
-                    class="form-control">
-            </select>
-        </div>
-        <div class="form-group">
-            <label asp-for="CityId"></label>
-            <select asp-for="@Model.CityId"
-                    name="CityId"
-                    id="CityId"
-                    asp-items="@(new SelectList(string.Empty, "Id", "Name"))"
-                    class="form-control"></select>
-        </div>
-        <input type="submit" class="btn btn-primary" />
-    </form>
+    </div>
 </div>
+
+
 @section Scripts {
 
     <script type="text/javascript">

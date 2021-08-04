@@ -7,9 +7,5 @@
     public class IndexViewModel
     {
         public IEnumerable<PropertiesInListViewModel> RandomProperties { get; set; }
-
-        public int CountriesCount { get; set; }
-
-        public int CitiesCount { get; set; }
     }
 }

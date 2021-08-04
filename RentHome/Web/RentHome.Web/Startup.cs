@@ -66,7 +66,6 @@
 
             // Application services
             services.AddTransient<ISettingsService, SettingsService>();
-            services.AddTransient<IGetCountService, GetCountService>();
             services.AddTransient<ICityService, CityService>();
             services.AddTransient<ICountryService, CountryService>();
             services.AddTransient<IPropertyService, PropertyService>();
