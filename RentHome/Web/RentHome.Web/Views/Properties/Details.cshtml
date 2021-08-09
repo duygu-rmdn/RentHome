@@ -1,4 +1,5 @@
 ﻿@model RentHome.Web.ViewModels.Properties.SinglePropertyViewModel
+@using RentHome.Data.Models.Enums
 @{
     this.ViewData["Title"] = "Details";
 }
@@ -51,7 +52,20 @@
                     </p>
                     <p>@Model.Description</p>
                 </div>
+                <h4>@Model.CaregoryName</h4>
                 <h4>@Model.StatusName</h4>
+                @if (Model.StatusName == Enum.GetName(typeof(PropertyStatus), 3) || Model.StatusName == Enum.GetName(typeof(PropertyStatus), 4))
+                {
+                    <a href="#" class="btn south-btn m-1 active">@Model.StatusName</a>
+                }
+                else if (Model.StatusName == Enum.GetName(typeof(PropertyStatus), 1) || Model.StatusName == Enum.GetName(typeof(PropertyStatus), 2))
+                {
+                    <a asp-controller="Rental" asp-action="Index" asp-route-id="@Model.Id" class="btn south-btn m-1">@Model.StatusName</a>
+                }
+                else
+                {
+                    <a href="#" class="btn south-btn m-1">@Model.StatusName</a>
+                }
             </div>
 
             <div class="col-12 col-md-6 col-lg-4">

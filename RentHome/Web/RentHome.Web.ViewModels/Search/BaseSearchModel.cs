@@ -9,9 +9,11 @@
     public abstract class BaseSearchModel
     {
         [Range(typeof(decimal), PriceMin, PriceMax)]
+        [Required]
         public decimal? MinPrice { get; set; }
 
         [Range(typeof(decimal), PriceMin, PriceMax)]
+        [Required]
         public decimal? MaxPrice { get; set; }
 
         [EnumDataType(typeof(PropertyStatus))]

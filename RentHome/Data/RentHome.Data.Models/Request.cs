@@ -36,10 +36,6 @@
 
         public Property Property { get; set; }
 
-        [Required]
-        [MaxLength(RequestDocumentMaxSize)]
-        public byte[] Document { get; set; }
-
         public RequestStatus Status { get; set; }
     }
 }
