@@ -1,7 +1,8 @@
 ﻿@model RentHome.Web.ViewModels.Properties.SinglePropertyViewModel
 @using RentHome.Data.Models.Enums
+@using System.Security.Claims;
 @{
-    this.ViewData["Title"] = "Details";
+this.ViewData["Title"] = "Details";
 }
 <section class="breadcumb-area bg-img call-to-action-area bg-fixed bg-overlay-black" style="background-image: url(https://c4.wallpaperflare.com/wallpaper/913/856/991/sea-luxury-homes-beach-swimming-pool-wallpaper-preview.jpg); ">
     <div class="container h-100">
@@ -43,7 +44,7 @@
                         <span id="starsForRate4" class="fa fa-star @if (3.5 <= Model.AverageVote) { <text>checked</text>}" data-vote="4"></span>
                         <span id="starsForRate5" class="fa fa-star @if (4.5 <= Model.AverageVote) { <text>checked</text>}" data-vote="5"></span>
                         <span id="averageVoteValue">@Model.AverageVote.ToString("0.0")</span><span> / 5</span>
-                        @if (this.User.Identity.IsAuthenticated)
+                        @if (this.User.Identity.IsAuthenticated && this.User.FindFirstValue(ClaimTypes.Name) == Model.OwnerUsername)
                         {
                             <span class="single-meta">
                                 <a asp-controller="Properties" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
@@ -107,7 +108,7 @@
                     </div>
                 </div>
                 <br>
-                @if (this.User.Identity.IsAuthenticated)
+                @if (this.User.Identity.IsAuthenticated && this.User.FindFirstValue(ClaimTypes.Name) == Model.OwnerUsername)
                 {
                     <form method="post" id="deleteForm" asp-action="Delete" asp-route-id="@Model.Id"></form>
                     <a class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">Delete</a>
