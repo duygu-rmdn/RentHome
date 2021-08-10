@@ -31,6 +31,8 @@
 
         public string OwnerEmail { get; set; }
 
+        public string MenagerUsername { get; set; }
+
         public double AverageVote { get; set; }
 
         public ContactInputModel Contact { get; set; }

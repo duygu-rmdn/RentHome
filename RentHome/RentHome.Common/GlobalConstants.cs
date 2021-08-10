@@ -29,8 +29,7 @@
         public const int ContractTitleMaxLength = 30;
         public const int AboutMaxLength = 200;
 
-        public const int ContractDocumentMaxSize = 4 * 1024 * 1024;
-        public const int RequestDocumentMaxSize = 2 * 1024 * 1024;
+        public const int DurationMinLenght = 0;
 
         public const int CountryCodeLength = 2;
 

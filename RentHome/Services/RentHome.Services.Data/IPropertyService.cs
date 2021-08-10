@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-
+    using RentHome.Data.Models.Enums;
     using RentHome.Web.ViewModels.Properties;
     using RentHome.Web.ViewModels.Search;
 
@@ -21,6 +21,8 @@
         Task UpdateAsync(string id, EditPropertyInputModel input);
 
         EditPropertyInputModel GetById(string id);
+
+        PropertyStatus GetStatusById(string id);
 
         Task DeleteAsync(string id);
 

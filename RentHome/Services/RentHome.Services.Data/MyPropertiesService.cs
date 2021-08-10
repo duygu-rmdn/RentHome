@@ -20,7 +20,7 @@
         {
             var properties = this.propertyRepository
                 .AllAsNoTracking()
-                .Where(x => x.IsDeleted == false && x.OwnerId == id)
+                .Where(x => x.IsDeleted == false && (x.OwnerId == id || x.ManagerId == id))
                 .OrderByDescending(x => x.CreatedOn)
                 .Select(x => new PropertiesInListViewModel
                 {

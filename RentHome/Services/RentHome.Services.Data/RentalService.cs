@@ -16,20 +16,30 @@
     {
         private readonly IRepository<Property> propertyRepository;
         private readonly IRepository<Request> requestRepository;
+        private readonly IRepository<Rental> rentalRepository;
+        private readonly IRepository<Contract> contractRepository;
 
         public RentalService(
             IRepository<Property> propertyRepository,
-            IRepository<Request> requestRepository)
+            IRepository<Request> requestRepository,
+            IRepository<Rental> rentalRepository,
+            IRepository<Contract> contractRepository)
         {
             this.propertyRepository = propertyRepository;
             this.requestRepository = requestRepository;
+            this.rentalRepository = rentalRepository;
+            this.contractRepository = contractRepository;
         }
 
-        public async Task ApproveAsync(string id)
+        public async Task ApproveAsync(string id, string requestId)
         {
             var property = this.propertyRepository.All()
                 .Where(x => x.Id == id)
                 .FirstOrDefault();
+
+            var request = this.requestRepository.All()
+               .Where(x => x.Id == requestId)
+               .FirstOrDefault();
 
             if (property.Status == PropertyStatus.ToManage)
             {
@@ -41,7 +51,7 @@
             }
             else
             {
-                // TODO: throw new Exception(); => message
+                throw new Exception();
             }
 
             this.requestRepository.All()
@@ -49,9 +59,27 @@
                 .FirstOrDefault()
                 .Status = RequestStatus.Approved;
 
-            await this.propertyRepository.SaveChangesAsync();
+            var rental = new Rental()
+            {
+                PropertyId = id,
+                RentDate = request.RentDate,
+                Duration = request.Duration,
+                TenantId = request.ApplicationUserId,
+                Contract = new Contract
+                {
+                    Title = "Contract",
+                    ManagerId = request.ApplicationUserId,
+                },
+            };
 
-            // change request status -> view if...
+            property.ManagerId = request.ApplicationUserId;
+
+            await this.rentalRepository.AddAsync(rental);
+
+            await this.propertyRepository.SaveChangesAsync();
+            await this.requestRepository.SaveChangesAsync();
+            await this.contractRepository.SaveChangesAsync();
+            await this.rentalRepository.SaveChangesAsync();
         }
 
         public PropertiesInListViewModel GetProperty(string id)
@@ -83,7 +111,8 @@
                     Username = x.ApplicationUser.UserName,
                     UserEmail = x.ApplicationUser.Email,
                     Type = x.Type,
-                    Date = x.Date.ToString("dd/MM/yyyy"),
+                    RentDate = x.RentDate.ToString("dd/MM/yyyy"),
+                    Dutartion = x.Duration,
                     Message = x.Message,
                 }).ToList();
 
@@ -113,6 +142,8 @@
                 ApplicationUserId = userId,
                 PropertyId = id,
                 Status = RequestStatus.NA,
+                RentDate = input.RentDate ?? DateTime.UtcNow,
+                Duration = input.Duration,
             };
 
             await this.requestRepository.AddAsync(request);

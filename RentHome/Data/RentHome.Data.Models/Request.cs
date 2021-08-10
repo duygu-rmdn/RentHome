@@ -37,5 +37,9 @@
         public Property Property { get; set; }
 
         public RequestStatus Status { get; set; }
+
+        public DateTime RentDate { get; set; }
+
+        public int? Duration { get; set; }
     }
 }

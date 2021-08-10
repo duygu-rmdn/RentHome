@@ -44,7 +44,7 @@
                         <span id="starsForRate4" class="fa fa-star @if (3.5 <= Model.AverageVote) { <text>checked</text>}" data-vote="4"></span>
                         <span id="starsForRate5" class="fa fa-star @if (4.5 <= Model.AverageVote) { <text>checked</text>}" data-vote="5"></span>
                         <span id="averageVoteValue">@Model.AverageVote.ToString("0.0")</span><span> / 5</span>
-                        @if (this.User.Identity.IsAuthenticated && this.User.FindFirstValue(ClaimTypes.Name) == Model.OwnerUsername)
+                        @if (this.User.Identity.IsAuthenticated && (this.User.FindFirstValue(ClaimTypes.Name) == Model.OwnerUsername || this.User.FindFirstValue(ClaimTypes.Name) == Model.MenagerUsername))
                         {
                             <span class="single-meta">
                                 <a asp-controller="Properties" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
@@ -126,8 +126,12 @@
                 <th scope="col">User</th>
                 <th scope="col">User Email</th>
                 <th scope="col">Type</th>
-                <th scope="col">Date</th>
+                <th scope="col">RentDate</th>
                 <th scope="col">Message</th>
+                @if (Model.StatusName == "ToRent")
+                {
+                    <th scope="col">Duration</th>
+                }
                 <th scope="col"></th>
             </tr>
         </thead>
@@ -138,10 +142,14 @@
                     <th scope="col">@request.Username</th>
                     <th scope="col">@request.UserEmail</th>
                     <th scope="col">@request.Type</th>
-                    <th scope="col">@request.Date</th>
+                    <th scope="col">@request.RentDate</th>
                     <th scope="col"><textarea class="col-8 border-0">@request.Message</textarea></th>
+                    @if (request.Type == RequestType.ToRent)
+                    {
+                        <th scope="col">@request.Dutartion</th>
+                    }
                     <th scope="col">
-                        <a asp-controller="Rental" asp-action="Approve" asp-route-id="@Model.Id" class="btn btn-primary">Approve</a>
+                        <a asp-controller="Rental" asp-action="Approve" asp-route-id="@Model.Id" asp-route-requestId="@request.Id" class="btn btn-primary">Approve</a>
                         <a asp-controller="Rental" asp-action="Rejected" asp-route-id="@request.Id" asp-route-propertyId="@Model.Id" class="btn btn-danger">Rejected</a>
                     </th>
                 </tr>

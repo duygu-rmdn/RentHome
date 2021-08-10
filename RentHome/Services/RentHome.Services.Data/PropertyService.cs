@@ -8,6 +8,7 @@
 
     using RentHome.Data.Common.Repositories;
     using RentHome.Data.Models;
+    using RentHome.Data.Models.Enums;
     using RentHome.Web.ViewModels.Properties;
     using RentHome.Web.ViewModels.Search;
 
@@ -156,11 +157,23 @@
                     OwnerFirstName = x.Owner.FirstName,
                     OwnerLastName = x.Owner.LastName,
                     OwnerUsername = x.Owner.UserName,
+                    MenagerUsername = x.Manager.UserName,
                     ImageUrl = "/images/properties/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extention,
                     AverageVote = this.votesService.GetAverageVote(id),
                 }).FirstOrDefault();
 
             return property;
+        }
+
+        public PropertyStatus GetStatusById(string id)
+        {
+            var propertyStatus = this.propertyRepository
+                .AllAsNoTracking()
+                .Where(x => x.Id == id)
+                .Select(x => x.Status)
+                .FirstOrDefault();
+
+            return propertyStatus;
         }
 
         public IEnumerable<PropertiesInListViewModel> Search(SearchListInputModel input)

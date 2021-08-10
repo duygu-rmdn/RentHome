@@ -14,7 +14,9 @@
 
         public RequestType Type { get; set; }
 
-        public string Date { get; set; }
+        public string RentDate { get; set; }
+
+        public int? Dutartion { get; set; }
 
         public string Message { get; set; }
     }

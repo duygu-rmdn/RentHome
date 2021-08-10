@@ -25,9 +25,16 @@
         <div class="col-12 col-lg-8">
             <div class="contact-form">
                 <form method="post">
+                    <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="form-group">
+                        @if (Model.Status == RentHome.Data.Models.Enums.PropertyStatus.ToRent)
+                        {
+                            <label asp-for="Duration"></label>
+                            <input class="form-control" asp-for="Duration" id="contact-name" placeholder="Duration" />
+                        }
+                        <label asp-for="RentDate"></label>
+                        <input class="form-control" asp-for="RentDate" id="contact-name" placeholder="Rent Date" />
                         <textarea class="form-control" asp-for="Message" id="message" cols="30" rows="10" placeholder="Your Message"></textarea>
-                        <span asp-validation-for="Message" class="text-danger"></span>
                     </div>
                     <button type="submit" class="btn south-btn">Request</button>
                 </form>
