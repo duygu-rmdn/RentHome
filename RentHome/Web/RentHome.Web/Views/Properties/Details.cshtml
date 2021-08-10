@@ -2,7 +2,7 @@
 @using RentHome.Data.Models.Enums
 @using System.Security.Claims;
 @{
-this.ViewData["Title"] = "Details";
+    this.ViewData["Title"] = "Details";
 }
 <section class="breadcumb-area bg-img call-to-action-area bg-fixed bg-overlay-black" style="background-image: url(https://c4.wallpaperflare.com/wallpaper/913/856/991/sea-luxury-homes-beach-swimming-pool-wallpaper-preview.jpg); ">
     <div class="container h-100">
@@ -49,6 +49,9 @@ this.ViewData["Title"] = "Details";
                             <span class="single-meta">
                                 <a asp-controller="Properties" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
                             </span>
+
+                            <form method="post" id="deleteForm" asp-action="Delete" asp-route-id="@Model.Id"></form>
+                            <a class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">Delete</a>
                         }
                     </p>
                     <p>@Model.Description</p>
@@ -68,56 +71,106 @@ this.ViewData["Title"] = "Details";
                     <a href="#" class="btn south-btn m-1">@Model.StatusName</a>
                 }
             </div>
-
             <div class="col-12 col-md-6 col-lg-4">
-                <div class="contact-realtor-wrapper">
-                    <div class="realtor-info">
-                        <div class="realtor---info">
-                            <h2>@Model.OwnerFirstName @Model.OwnerLastName</h2>
-                            <p>Owner</p>
-                            <h6>
-                                <span style="font-size: 1.2rem;">
-                                    <span style="color: #947054;">
-                                        <i class="far fa-user"></i>
-                                    </span>
-                                </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Model.OwnerUsername
-                            </h6>
-                            <h6><img src="https://technext.github.io/south/img/icons/envelope.png" alt=""> @Model.OwnerEmail</h6>
-                        </div>
-                        <div class="realtor--contact-form">
-                            <form method="post">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" asp-for="Contact.YourName" id="contact-name" placeholder="Your Name">
-                                    <span asp-validation-for="Contact.YourName" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control" asp-for="Contact.YourEmail" id="contact-email" placeholder="Your Email">
-                                    <span asp-validation-for="Contact.YourEmail" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" asp-for="Contact.Subject" id="contact-name" placeholder="Subject">
-                                    <span asp-validation-for="Contact.Subject" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <textarea class="form-control" asp-for="Contact.Message" id="message" cols="30" rows="10" placeholder="Your Message"></textarea>
-                                    <span asp-validation-for="Contact.Message" class="text-danger"></span>
-                                </div>
-                                <button type="submit" class="btn south-btn">Send Message</button>
-                            </form>
+                @if (this.User.FindFirstValue(ClaimTypes.Name) != Model.OwnerUsername)
+                {
+                    <div class="contact-realtor-wrapper">
+                        <div class="realtor-info">
+                            <div class="realtor---info">
+                                <h2>@Model.OwnerFirstName @Model.OwnerLastName</h2>
+                                <p>Owner</p>
+                                <h6>
+                                    <span style="font-size: 1.2rem;">
+                                        <span style="color: #947054;">
+                                            <i class="far fa-user"></i>
+                                        </span>
+                                    </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Model.OwnerUsername
+                                </h6>
+                                <h6><img src="https://technext.github.io/south/img/icons/envelope.png" alt=""> @Model.OwnerEmail</h6>
+                            </div>
+                            <div class="realtor--contact-form">
+                                <form method="post">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" asp-for="Contact.YourName" id="contact-name" placeholder="Your Name">
+                                        <span asp-validation-for="Contact.YourName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" asp-for="Contact.YourEmail" id="contact-email" placeholder="Your Email">
+                                        <span asp-validation-for="Contact.YourEmail" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" asp-for="Contact.Subject" id="contact-name" placeholder="Subject">
+                                        <span asp-validation-for="Contact.Subject" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" asp-for="Contact.Message" id="message" cols="30" rows="10" placeholder="Your Message"></textarea>
+                                        <span asp-validation-for="Contact.Message" class="text-danger"></span>
+                                    </div>
+                                    <button type="submit" class="btn south-btn">Send Message</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <br>
-                @if (this.User.Identity.IsAuthenticated && this.User.FindFirstValue(ClaimTypes.Name) == Model.OwnerUsername)
-                {
-                    <form method="post" id="deleteForm" asp-action="Delete" asp-route-id="@Model.Id"></form>
-                    <a class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">Delete</a>
                 }
+
             </div>
         </div>
     </div>
 </section>
+@if (this.User.Identity.IsAuthenticated && this.User.FindFirstValue(ClaimTypes.Name) == Model.OwnerUsername)
+{
+    <h6 class="container">Requests:</h6>
+    <table class="table table-striped container">
+        <thead>
+            <tr>
+                <th scope="col">User</th>
+                <th scope="col">User Email</th>
+                <th scope="col">Type</th>
+                <th scope="col">Date</th>
+                <th scope="col">Message</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var request in Model.Requests)
+            {
+                <tr>
+                    <th scope="col">@request.Username</th>
+                    <th scope="col">@request.UserEmail</th>
+                    <th scope="col">@request.Type</th>
+                    <th scope="col">@request.Date</th>
+                    <th scope="col"><textarea class="col-8 border-0">@request.Message</textarea></th>
+                    <th scope="col">
+                        <a asp-controller="Rental" asp-action="Approve" asp-route-id="@Model.Id" class="btn btn-primary">Approve</a>
+                        <a asp-controller="Rental" asp-action="Rejected" asp-route-id="@request.Id" asp-route-propertyId="@Model.Id" class="btn btn-danger">Rejected</a>
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 <form method="post" id="antyForgeryForm"></form>
+
+<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Delete property</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete "@Model.Name"?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-danger" onclick="deleteForm.submit()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script>
         $("span[data-vote]").each(function (el) {
@@ -152,23 +205,3 @@ this.ViewData["Title"] = "Details";
         });
     </script>
 }
-
-<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Delete property</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Do you want to delete "@Model.Name"?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                <button type="button" class="btn btn-danger" onclick="deleteForm.submit()">Yes</button>
-            </div>
-        </div>
-    </div>
-</div>

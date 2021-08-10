@@ -21,10 +21,6 @@
         [StringLength(ContractTitleMaxLength, ErrorMessage = TitleTooLong)]
         public string Title { get; set; }
 
-        [Required]
-        [MaxLength(ContractDocumentMaxSize)]
-        public byte[] ContractDocument { get; set; }
-
         public int? RentalId { get; set; }
 
         [ForeignKey("RentalId")]

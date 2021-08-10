@@ -41,5 +41,19 @@
             await this.rentalService.RequestAsync(input, userId, id);
             return this.Redirect("/");
         }
+
+        public async Task<IActionResult> Approve(string id)
+        {
+            await this.rentalService.ApproveAsync(id);
+
+            return this.RedirectToAction("Details", "Properties", new { id = id });
+        }
+
+        public async Task<IActionResult> Rejected(string id, string propertyId)
+        {
+            await this.rentalService.RejectedAsync(id);
+
+            return this.RedirectToAction("Details", "Properties", new { id = propertyId });
+        }
     }
 }

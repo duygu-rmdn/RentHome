@@ -1,5 +1,6 @@
 ﻿namespace RentHome.Services.Data
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using RentHome.Web.ViewModels.Properties;
@@ -10,5 +11,11 @@
         PropertiesInListViewModel GetProperty(string id);
 
         Task RequestAsync(RequestInputModel input, string userId, string id);
+
+        IEnumerable<MyPropertyRequestsViewModel> MyPropertyRequests(string propertyId);
+
+        Task ApproveAsync(string id);
+
+        Task RejectedAsync(string id);
     }
 }

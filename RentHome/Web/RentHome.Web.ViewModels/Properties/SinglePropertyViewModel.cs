@@ -3,6 +3,7 @@
     using System.Collections.Generic;
 
     using RentHome.Web.ViewModels.ContactUs;
+    using RentHome.Web.ViewModels.Rental;
 
     public class SinglePropertyViewModel
     {
@@ -33,5 +34,7 @@
         public double AverageVote { get; set; }
 
         public ContactInputModel Contact { get; set; }
+
+        public IEnumerable<MyPropertyRequestsViewModel> Requests { get; set; }
     }
 }

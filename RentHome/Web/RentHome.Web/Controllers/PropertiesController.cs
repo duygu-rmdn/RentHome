@@ -20,6 +20,7 @@
         private readonly ICityService cityService;
         private readonly ICountryService countryService;
         private readonly IPropertyService propertyService;
+        private readonly IRentalService rentalService;
         private readonly IRepository<Property> propertyRepository;
         private readonly IWebHostEnvironment environment;
         private readonly IContactService contactService;
@@ -29,6 +30,7 @@
             ICityService cityService,
             ICountryService countryService,
             IPropertyService propertyService,
+            IRentalService rentalService,
             IRepository<Property> propertyRepository,
             IWebHostEnvironment environment,
             IContactService contactService,
@@ -37,6 +39,7 @@
             this.cityService = cityService;
             this.countryService = countryService;
             this.propertyService = propertyService;
+            this.rentalService = rentalService;
             this.propertyRepository = propertyRepository;
             this.environment = environment;
             this.contactService = contactService;
@@ -130,6 +133,7 @@
         public IActionResult Details(string id)
         {
             var viewModel = this.propertyService.GetSingleProperty(id);
+            viewModel.Requests = this.rentalService.MyPropertyRequests(id);
             return this.View(viewModel);
         }
 
