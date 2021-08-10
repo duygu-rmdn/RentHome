@@ -104,13 +104,15 @@
         public IEnumerable<MyPropertyRequestsViewModel> MyPropertyRequests(string propertyId)
         {
             var requests = this.requestRepository.All()
-                .Where(x => x.PropertyId == propertyId && x.Status != RequestStatus.Rejected)
+                .Where(x => x.PropertyId == propertyId)
+                .OrderBy(x => x.Status)
                 .Select(x => new MyPropertyRequestsViewModel
                 {
                     Id = x.Id,
                     Username = x.ApplicationUser.UserName,
                     UserEmail = x.ApplicationUser.Email,
                     Type = x.Type,
+                    Status = x.Status,
                     RentDate = x.RentDate.ToString("dd/MM/yyyy"),
                     Dutartion = x.Duration,
                     Message = x.Message,

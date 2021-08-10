@@ -117,7 +117,7 @@
         </div>
     </div>
 </section>
-@if (this.User.Identity.IsAuthenticated && this.User.FindFirstValue(ClaimTypes.Name) == Model.OwnerUsername)
+@if (this.User.Identity.IsAuthenticated && (this.User.FindFirstValue(ClaimTypes.Name) == Model.OwnerUsername || this.User.FindFirstValue(ClaimTypes.Name) == Model.MenagerUsername))
 {
     <h6 class="container">Requests:</h6>
     <table class="table table-striped container">
@@ -128,10 +128,7 @@
                 <th scope="col">Type</th>
                 <th scope="col">RentDate</th>
                 <th scope="col">Message</th>
-                @if (Model.StatusName == "ToRent")
-                {
-                    <th scope="col">Duration</th>
-                }
+                <th scope="col">Duration</th>
                 <th scope="col"></th>
             </tr>
         </thead>
@@ -144,13 +141,27 @@
                     <th scope="col">@request.Type</th>
                     <th scope="col">@request.RentDate</th>
                     <th scope="col"><textarea class="col-8 border-0">@request.Message</textarea></th>
-                    @if (request.Type == RequestType.ToRent)
+                    @if (request.Dutartion != null)
                     {
                         <th scope="col">@request.Dutartion</th>
+                    } else
+                    {
+                        <th scope="col">---</th>
                     }
                     <th scope="col">
-                        <a asp-controller="Rental" asp-action="Approve" asp-route-id="@Model.Id" asp-route-requestId="@request.Id" class="btn btn-primary">Approve</a>
-                        <a asp-controller="Rental" asp-action="Rejected" asp-route-id="@request.Id" asp-route-propertyId="@Model.Id" class="btn btn-danger">Rejected</a>
+                        @if (request.Status == RequestStatus.NA)
+                        {
+                            <a asp-controller="Rental" asp-action="Approve" asp-route-id="@Model.Id" asp-route-requestId="@request.Id" class="btn btn-primary">Approve</a>
+                            <a asp-controller="Rental" asp-action="Rejected" asp-route-id="@request.Id" asp-route-propertyId="@Model.Id" class="btn btn-danger">Rejected</a>
+                        }
+                        @if (request.Status == RequestStatus.Rejected)
+                        {
+                            <a href="#" class="btn south-btn m-1 active">Rejected</a>
+                        }
+                        @if (request.Status == RequestStatus.Approved)
+                        {
+                            <a href="#" class="btn south-btn m-1 active">Approved</a>
+                        }
                     </th>
                 </tr>
             }

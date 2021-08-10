@@ -14,6 +14,8 @@
 
         public RequestType Type { get; set; }
 
+        public RequestStatus Status { get; set; }
+
         public string RentDate { get; set; }
 
         public int? Dutartion { get; set; }
