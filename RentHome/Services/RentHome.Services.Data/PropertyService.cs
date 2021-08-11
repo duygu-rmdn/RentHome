@@ -74,8 +74,7 @@
         }
 
         public IEnumerable<PropertiesInListViewModel> GetAll(int page, int itemsPerPage = 12)
-        {
-            var properties = this.propertyRepository
+            => this.propertyRepository
                 .AllAsNoTracking()
                 .Where(x => x.IsDeleted == false)
                 .OrderByDescending(x => x.CreatedOn)
@@ -92,12 +91,8 @@
                     ImageUrl = "/images/properties/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extention,
                 }).ToList();
 
-            return properties;
-        }
-
         public EditPropertyInputModel GetById(string id)
-        {
-            var property = this.propertyRepository
+            => this.propertyRepository
                 .AllAsNoTracking()
                 .Where(x => x.Id == id)
                 .Select(x => new EditPropertyInputModel
@@ -110,17 +105,13 @@
                     Description = x.Description,
                 }).FirstOrDefault();
 
-            return property;
-        }
-
         public int GetCount()
-        {
-            return this.propertyRepository.All().Count();
-        }
+            => this.propertyRepository.All()
+                    .Where(x => x.IsDeleted == false)
+                    .Count();
 
         public IEnumerable<PropertiesInListViewModel> GetRandom(int count)
-        {
-            var properties = this.propertyRepository
+            => this.propertyRepository
                 .All()
                 .Where(x => x.IsDeleted == false)
                 .OrderBy(x => Guid.NewGuid())
@@ -136,12 +127,8 @@
                     ImageUrl = "/images/properties/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extention,
                 }).ToList();
 
-            return properties;
-        }
-
         public SinglePropertyViewModel GetSingleProperty(string id)
-        {
-            var property = this.propertyRepository
+            => this.propertyRepository
                 .AllAsNoTracking()
                 .Where(x => x.Id == id)
                 .Select(x => new SinglePropertyViewModel
@@ -157,28 +144,21 @@
                     OwnerFirstName = x.Owner.FirstName,
                     OwnerLastName = x.Owner.LastName,
                     OwnerUsername = x.Owner.UserName,
+                    ImageUrls = x.Images.Select(y => "/images/properties/" + y.Id + "." + y.Extention)
+                        .ToList(),
                     MenagerUsername = x.Manager.UserName,
-                    ImageUrl = "/images/properties/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extention,
                     AverageVote = this.votesService.GetAverageVote(id),
                 }).FirstOrDefault();
 
-            return property;
-        }
-
         public PropertyStatus GetStatusById(string id)
-        {
-            var propertyStatus = this.propertyRepository
+            => this.propertyRepository
                 .AllAsNoTracking()
                 .Where(x => x.Id == id)
                 .Select(x => x.Status)
                 .FirstOrDefault();
 
-            return propertyStatus;
-        }
-
         public IEnumerable<PropertiesInListViewModel> Search(SearchListInputModel input)
-        {
-            var result = this.propertyRepository.All()
+            => this.propertyRepository.All()
                 .Where(x => x.Price >= input.MinPrice
                     && x.Price <= input.MaxPrice
                     && x.Category == input.Category
@@ -197,9 +177,6 @@
                     Description = x.Description.Substring(0, 70) + "...",
                     ImageUrl = "/images/properties/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extention,
                 }).ToList();
-
-            return result;
-        }
 
         public async Task UpdateAsync(string id, EditPropertyInputModel input)
         {

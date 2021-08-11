@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
     using RentHome.Data.Models.Enums;
     using RentHome.Web.ViewModels.Properties;
     using RentHome.Web.ViewModels.Search;
