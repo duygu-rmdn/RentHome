@@ -22,19 +22,22 @@
         private readonly IRepository<Rental> rentalRepository;
         private readonly IRepository<Contract> contractRepository;
         private readonly IEmailSenderService emailSenderService;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public RentalService(
             IRepository<Property> propertyRepository,
             IRepository<Request> requestRepository,
             IRepository<Rental> rentalRepository,
             IRepository<Contract> contractRepository,
-            IEmailSenderService emailSenderService)
+            IEmailSenderService emailSenderService,
+            UserManager<ApplicationUser> userManager)
         {
             this.propertyRepository = propertyRepository;
             this.requestRepository = requestRepository;
             this.rentalRepository = rentalRepository;
             this.contractRepository = contractRepository;
             this.emailSenderService = emailSenderService;
+            this.userManager = userManager;
         }
 
         public async Task ApproveAsync(string propertyId, string requestId)
@@ -80,7 +83,7 @@
                 Contract = new Contract
                 {
                     Title = "Contract",
-                    ManagerId = request.ApplicationUserId,
+                    ManagerId = property.ManagerId ?? property.OwnerId,
                 },
             };
 
@@ -95,6 +98,41 @@
             var html = "Your request for " + property.Name + " is approved";
 
             this.emailSenderService.SendMail(SystemEmail, userEmail, subject, html);
+        }
+
+        public async Task<ContractViewModel> GetContractInfoAsync(string propertyId, string requestId)
+        {
+            var request = this.requestRepository.All()
+                .Where(x => x.Id == requestId)
+                .FirstOrDefault();
+
+            var rental = this.rentalRepository.All()
+                .Where(x => x.PropertyId == propertyId && request.PropertyId == propertyId)
+                .FirstOrDefault();
+
+            var property = this.propertyRepository.All()
+                .Where(x => x.Id == request.PropertyId)
+                .FirstOrDefault();
+
+            var contract = this.contractRepository.All()
+                .Where(x => x.Id == rental.ContractId)
+                .FirstOrDefault();
+
+            var owner = await this.userManager.FindByIdAsync(property.OwnerId);
+            var tenant = await this.userManager.FindByIdAsync(rental.TenantId);
+
+            var viewModel = new ContractViewModel()
+            {
+                Property = this.GetProperty(propertyId),
+                Duration = request.Duration,
+                RentDate = request.RentDate.ToString("dd/MM/yyyy"),
+                Status = request.Status,
+                OwnerUserName = owner.UserName,
+                TenantUserName = tenant.UserName,
+                Title = contract.Title,
+            };
+
+            return viewModel;
         }
 
         public PropertiesInListViewModel GetProperty(string id)

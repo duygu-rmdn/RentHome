@@ -399,6 +399,9 @@ namespace RentHome.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("RequestId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -409,6 +412,8 @@ namespace RentHome.Data.Migrations
                     b.HasIndex("ManagerId");
 
                     b.HasIndex("OwnerId");
+
+                    b.HasIndex("RequestId");
 
                     b.ToTable("Properties");
                 });
@@ -660,11 +665,17 @@ namespace RentHome.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("RentHome.Data.Models.Request", "Request")
+                        .WithMany()
+                        .HasForeignKey("RequestId");
+
                     b.Navigation("City");
 
                     b.Navigation("Manager");
 
                     b.Navigation("Owner");
+
+                    b.Navigation("Request");
                 });
 
             modelBuilder.Entity("RentHome.Data.Models.Rental", b =>

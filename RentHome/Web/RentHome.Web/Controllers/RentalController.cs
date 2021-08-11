@@ -61,5 +61,12 @@
 
             return this.RedirectToAction("Details", "Properties", new { id = propertyId });
         }
+
+        [Authorize]
+        public async Task<IActionResult> Contract(string propertyId, string requestId)
+        {
+            var viewModel = await this.rentalService.GetContractInfoAsync(propertyId, requestId);
+            return this.View(viewModel);
+        }
     }
 }

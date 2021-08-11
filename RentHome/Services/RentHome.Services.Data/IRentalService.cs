@@ -17,5 +17,7 @@
         Task ApproveAsync(string propertyId, string requestId);
 
         Task RejectedAsync(string id);
+
+        Task<ContractViewModel> GetContractInfoAsync(string propertyId, string requestId);
     }
 }
