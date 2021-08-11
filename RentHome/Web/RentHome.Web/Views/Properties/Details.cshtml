@@ -151,7 +151,7 @@
                     <th scope="col">
                         @if (request.Status == RequestStatus.NA)
                         {
-                            <a asp-controller="Rental" asp-action="Approve" asp-route-id="@Model.Id" asp-route-requestId="@request.Id" class="btn btn-primary">Approve</a>
+                            <a asp-controller="Rental" asp-action="Approve" asp-route-propertyId="@Model.Id" asp-route-requestId="@request.Id" class="btn btn-primary">Approve</a>
                             <a asp-controller="Rental" asp-action="Rejected" asp-route-id="@request.Id" asp-route-propertyId="@Model.Id" class="btn btn-danger">Rejected</a>
                         }
                         @if (request.Status == RequestStatus.Rejected)

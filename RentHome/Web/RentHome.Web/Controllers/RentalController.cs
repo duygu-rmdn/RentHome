@@ -48,11 +48,11 @@
             return this.Redirect("/");
         }
 
-        public async Task<IActionResult> Approve(string id, string requestId)
+        public async Task<IActionResult> Approve(string propertyId, string requestId)
         {
-            await this.rentalService.ApproveAsync(id, requestId);
+            await this.rentalService.ApproveAsync(propertyId, requestId);
 
-            return this.RedirectToAction("Details", "Properties", new { id = id });
+            return this.RedirectToAction("Details", "Properties", new { id = propertyId });
         }
 
         public async Task<IActionResult> Rejected(string id, string propertyId)

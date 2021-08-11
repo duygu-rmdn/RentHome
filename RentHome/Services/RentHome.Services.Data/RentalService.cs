@@ -9,8 +9,11 @@
     using RentHome.Data.Common.Repositories;
     using RentHome.Data.Models;
     using RentHome.Data.Models.Enums;
+    using RentHome.Services.Messaging;
     using RentHome.Web.ViewModels.Properties;
     using RentHome.Web.ViewModels.Rental;
+
+    using static RentHome.Common.GlobalConstants;
 
     public class RentalService : IRentalService
     {
@@ -18,32 +21,41 @@
         private readonly IRepository<Request> requestRepository;
         private readonly IRepository<Rental> rentalRepository;
         private readonly IRepository<Contract> contractRepository;
+        private readonly IEmailSenderService emailSenderService;
 
         public RentalService(
             IRepository<Property> propertyRepository,
             IRepository<Request> requestRepository,
             IRepository<Rental> rentalRepository,
-            IRepository<Contract> contractRepository)
+            IRepository<Contract> contractRepository,
+            IEmailSenderService emailSenderService)
         {
             this.propertyRepository = propertyRepository;
             this.requestRepository = requestRepository;
             this.rentalRepository = rentalRepository;
             this.contractRepository = contractRepository;
+            this.emailSenderService = emailSenderService;
         }
 
-        public async Task ApproveAsync(string id, string requestId)
+        public async Task ApproveAsync(string propertyId, string requestId)
         {
             var property = this.propertyRepository.All()
-                .Where(x => x.Id == id)
+                .Where(x => x.Id == propertyId)
                 .FirstOrDefault();
 
             var request = this.requestRepository.All()
                .Where(x => x.Id == requestId)
                .FirstOrDefault();
 
+            var userEmail = this.requestRepository.All()
+               .Where(x => x.Id == requestId)
+               .Select(x => x.ApplicationUser.Email)
+               .FirstOrDefault();
+
             if (property.Status == PropertyStatus.ToManage)
             {
                 property.Status = PropertyStatus.Managed;
+                property.ManagerId = request.ApplicationUserId;
             }
             else if (property.Status == PropertyStatus.ToRent)
             {
@@ -55,13 +67,13 @@
             }
 
             this.requestRepository.All()
-                .Where(x => x.PropertyId == id)
+                .Where(x => x.Id == requestId)
                 .FirstOrDefault()
                 .Status = RequestStatus.Approved;
 
             var rental = new Rental()
             {
-                PropertyId = id,
+                PropertyId = propertyId,
                 RentDate = request.RentDate,
                 Duration = request.Duration,
                 TenantId = request.ApplicationUserId,
@@ -72,14 +84,17 @@
                 },
             };
 
-            property.ManagerId = request.ApplicationUserId;
-
             await this.rentalRepository.AddAsync(rental);
 
             await this.propertyRepository.SaveChangesAsync();
             await this.requestRepository.SaveChangesAsync();
             await this.contractRepository.SaveChangesAsync();
             await this.rentalRepository.SaveChangesAsync();
+
+            var subject = "approved request";
+            var html = "Your request for " + property.Name + " is approved";
+
+            this.emailSenderService.SendMail(SystemEmail, userEmail, subject, html);
         }
 
         public PropertiesInListViewModel GetProperty(string id)

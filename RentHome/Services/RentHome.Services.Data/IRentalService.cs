@@ -14,7 +14,7 @@
 
         IEnumerable<MyPropertyRequestsViewModel> MyPropertyRequests(string propertyId);
 
-        Task ApproveAsync(string id, string requestId);
+        Task ApproveAsync(string propertyId, string requestId);
 
         Task RejectedAsync(string id);
     }
