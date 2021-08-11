@@ -91,7 +91,7 @@
             await this.contractRepository.SaveChangesAsync();
             await this.rentalRepository.SaveChangesAsync();
 
-            var subject = "approved request";
+            var subject = "Approved request";
             var html = "Your request for " + property.Name + " is approved";
 
             this.emailSenderService.SendMail(SystemEmail, userEmail, subject, html);
@@ -140,6 +140,20 @@
         {
             this.requestRepository.All().Where(x => x.Id == id).FirstOrDefault().Status = RequestStatus.Rejected;
 
+            var property = this.requestRepository.All()
+                .Where(x => x.Id == id)
+                .Select(x => x.Property)
+                .FirstOrDefault();
+
+            var userEmail = this.requestRepository.All()
+               .Where(x => x.Id == id)
+               .Select(x => x.ApplicationUser.Email)
+               .FirstOrDefault();
+
+            var subject = "Rejected request";
+            var html = "Your request for " + property.Name + " is rejected";
+
+            this.emailSenderService.SendMail(SystemEmail, userEmail, subject, html);
             await this.requestRepository.SaveChangesAsync();
         }
 
