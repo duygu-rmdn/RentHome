@@ -28,6 +28,8 @@
 
             this.contactUsService.Contact(input);
 
+            this.TempData["Contact"] = "Your message was sended successful!";
+
             return this.Redirect("/");
         }
     }

@@ -45,6 +45,9 @@
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             await this.rentalService.RequestAsync(input, userId, id);
+
+            this.TempData["Request"] = "Your request was sended successful!";
+
             return this.Redirect("/");
         }
 
@@ -52,12 +55,16 @@
         {
             await this.rentalService.ApproveAsync(propertyId, requestId);
 
+            this.TempData["Approve"] = "Your approved is successful!";
+
             return this.RedirectToAction("Details", "Properties", new { id = propertyId });
         }
 
         public async Task<IActionResult> Rejected(string id, string propertyId)
         {
             await this.rentalService.RejectedAsync(id);
+
+            this.TempData["Reject"] = "Your rejection is successful!";
 
             return this.RedirectToAction("Details", "Properties", new { id = propertyId });
         }

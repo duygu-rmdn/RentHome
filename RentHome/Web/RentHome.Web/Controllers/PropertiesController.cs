@@ -72,6 +72,8 @@
 
             await this.propertyService.UpdateAsync(id, input);
 
+            this.TempData["Edit"] = "The changes were successful!";
+
             return this.RedirectToAction(nameof(this.Details), new { id });
         }
 
@@ -114,6 +116,8 @@
                 .Select(x => x.Id)
                 .FirstOrDefault();
 
+            this.TempData["Create"] = "You have successfully created a property";
+
             return this.Redirect($"/Properties/Details/{propertyId}");
         }
 
@@ -149,6 +153,8 @@
 
             this.contactService.ContactWithOwner(result, ownerEmail);
 
+            this.TempData["Contact"] = "Your message was sended successful!";
+
             return this.Redirect("/");
         }
 
@@ -157,6 +163,9 @@
         public async Task<IActionResult> Delete(string id)
         {
             await this.propertyService.DeleteAsync(id);
+
+            this.TempData["Delete"] = "You have successfully deleted a property!";
+
             return this.RedirectToAction(nameof(this.All));
         }
     }

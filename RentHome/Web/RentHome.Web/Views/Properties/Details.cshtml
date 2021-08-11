@@ -4,6 +4,34 @@
 @{
     this.ViewData["Title"] = "Details";
 }
+@if (this.TempData.ContainsKey("Edit"))
+{
+    <div class="alert alert-success alert-dismissible fade show mb-0">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        @this.TempData["Edit"]
+    </div>
+}
+else if (this.TempData.ContainsKey("Create"))
+{
+    <div class="alert alert-success alert-dismissible fade show mb-0">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        @this.TempData["Create"]
+    </div>
+}
+else if (this.TempData.ContainsKey("Approve"))
+{
+    <div class="alert alert-success alert-dismissible fade show mb-0">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        @this.TempData["Approve"]
+    </div>
+}
+else if (this.TempData.ContainsKey("Reject"))
+{
+    <div class="alert alert-success alert-dismissible fade show mb-0">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        @this.TempData["Reject"]
+    </div>
+}
 <section class="breadcumb-area bg-img call-to-action-area bg-fixed bg-overlay-black" style="background-image: url(https://c4.wallpaperflare.com/wallpaper/913/856/991/sea-luxury-homes-beach-swimming-pool-wallpaper-preview.jpg); ">
     <div class="container h-100">
         <div class="row h-100 align-items-center">
@@ -144,26 +172,27 @@
                     @if (request.Dutartion != null)
                     {
                         <th scope="col">@request.Dutartion</th>
-                    } else
+                    }
+                    else
                     {
                         <th scope="col">---</th>
                     }
-                <th scope="col">
-                    @if (request.Status == RequestStatus.NA)
-                    {
-                        <a asp-controller="Rental" asp-action="Approve" asp-route-propertyId="@Model.Id" asp-route-requestId="@request.Id" class="btn btn-primary">Approve</a>
-                        <a asp-controller="Rental" asp-action="Rejected" asp-route-id="@request.Id" asp-route-propertyId="@Model.Id" class="btn btn-danger">Rejected</a>
-                    }
-                    @if (request.Status == RequestStatus.Rejected)
-                    {
-                        <a href="#" class="btn south-btn m-1 active">Rejected</a>
-                    }
-                    @if (request.Status == RequestStatus.Approved)
-                    {
-                        <a href="#" class="btn south-btn m-1 active">Approved</a>
-                        <a asp-controller="Rental" asp-action="Contract" asp-route-propertyId="@Model.Id" asp-route-requestId="@request.Id" class="btn btn-primary">View Contract</a>
-                    }
-                </th>
+                    <th scope="col">
+                        @if (request.Status == RequestStatus.NA)
+                        {
+                            <a asp-controller="Rental" asp-action="Approve" asp-route-propertyId="@Model.Id" asp-route-requestId="@request.Id" class="btn btn-primary">Approve</a>
+                            <a asp-controller="Rental" asp-action="Rejected" asp-route-id="@request.Id" asp-route-propertyId="@Model.Id" class="btn btn-danger">Rejected</a>
+                        }
+                        @if (request.Status == RequestStatus.Rejected)
+                        {
+                            <a href="#" class="btn south-btn m-1 active">Rejected</a>
+                        }
+                        @if (request.Status == RequestStatus.Approved)
+                        {
+                            <a href="#" class="btn south-btn m-1 active">Approved</a>
+                            <a asp-controller="Rental" asp-action="Contract" asp-route-propertyId="@Model.Id" asp-route-requestId="@request.Id" class="btn btn-primary">View Contract</a>
+                        }
+                    </th>
                 </tr>
             }
         </tbody>
