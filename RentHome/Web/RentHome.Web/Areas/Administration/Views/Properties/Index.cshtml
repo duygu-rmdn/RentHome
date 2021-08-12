@@ -1,1 +1,22 @@
-﻿<h1>hello world!</h1>
+﻿@model RentHome.Web.ViewModels.Properties.PropertiesListViewModel
+@{
+    this.ViewData["Title"] = "Non-public properties";
+    var img = new SectionImg() { Name = "Non-public properties", Img = "https://i.pinimg.com/564x/f6/e6/51/f6e651d0a8bcb4f0c0c1f1ef5482b86b.jpg" };
+}
+<partial name="_SectionImgPartial" model="img" />
+<br>
+<div class="container">
+    @if (Model.Properties.Count() == 0)
+    {
+        <h3>All properties are public!</h3>
+    }
+    else
+    {
+        <div class="row  justify-content-center">
+            @foreach (var property in Model.Properties)
+            {
+                <partial name="_PropertiesCardPartial" model="@property" />
+            }
+        </div>
+    }
+</div>

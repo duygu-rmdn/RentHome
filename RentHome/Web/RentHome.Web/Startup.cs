@@ -19,6 +19,7 @@
     using RentHome.Services.Data;
     using RentHome.Services.Mapping;
     using RentHome.Services.Messaging;
+    using RentHome.Web.Areas.Administration.Services;
     using RentHome.Web.ViewModels;
 
     public class Startup
@@ -74,6 +75,7 @@
             services.AddTransient<IEmailSenderService, EmailSenderService>();
             services.AddTransient<IRentalService, RentalService>();
             services.AddTransient<IMyPropertiesService, MyPropertiesService>();
+            services.AddTransient<IAdminPropertyService, AdminPropertyService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

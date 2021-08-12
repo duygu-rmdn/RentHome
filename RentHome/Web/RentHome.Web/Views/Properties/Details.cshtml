@@ -89,8 +89,7 @@ else if (this.TempData.ContainsKey("Reject"))
                     </p>
                     <p>@Model.Description</p>
                 </div>
-                <h4>@Model.CaregoryName</h4>
-                <h4>@Model.StatusName</h4>
+                <h4>Caregory: @Model.CaregoryName</h4>
                 @if (Model.StatusName == Enum.GetName(typeof(PropertyStatus), 3) || Model.StatusName == Enum.GetName(typeof(PropertyStatus), 4))
                 {
                     <a href="#" class="btn south-btn m-1 active">@Model.StatusName</a>
