@@ -1,59 +1,30 @@
 ﻿@model RentHome.Web.ViewModels.Rental.ContractViewModel
 @{
     ViewData["Title"] = "Contract";
+    var img = new SectionImg() { Name = "Contract", Img = "https://media.tehrantimes.com/d/t/2021/04/13/3/3740482.jpg" };
 }
-<section class="breadcumb-area bg-img call-to-action-area bg-fixed bg-overlay-black" style="background-image: url(https://media.tehrantimes.com/d/t/2021/04/13/3/3740482.jpg); ">
-    <div class="container h-100">
-        <div class="row h-100 align-items-center">
-            <div class="col-12">
-                <div class="breadcumb-content">
-                    <h3 class="breadcumb-title">Contract</h3>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<partial name="_SectionImgPartial" model="img" />
 
 <div class="container">
-    <br/>
+    <br />
     <div class="row  justify-content-center">
         <div class="section-heading text-left wow fadeInUp pr-5 pt-5" data-wow-delay="250ms">
             <h2>@Model.Title</h2>
             <p>Status: @Model.Status</p>
-            <p class="wow fadeInUp" data-wow-delay="450ms">Duration: @if (Model.Duration == null)
-            {
-                <text>---</text>
-            }
-            else
-            {
-                @Model.Duration
-            }</p>
+            <p class="wow fadeInUp" data-wow-delay="450ms">
+                Duration: @if (Model.Duration == null)
+                {
+                    <text>---</text>
+                }
+                else
+                {
+                    @Model.Duration
+                }
+            </p>
             <p class="wow fadeInUp" data-wow-delay="450ms">RentDate: @Model.RentDate</p>
             <p class="wow fadeInUp" data-wow-delay="450ms">Tenant: @Model.TenantUserName</p>
             <p class="wow fadeInUp" data-wow-delay="450ms">Owner: @Model.OwnerUserName</p>
         </div>
-        <!-- Single Featured Property -->
-        <div class="col-12 col-md-6 col-xl-4">
-            <div class="single-featured-property mb-50">
-                <!-- Property Thumbnail -->
-                <div class="property-thumb">
-                    <img src="@Model.Property.ImageUrl" alt="">
-
-                    <div class="tag">
-                        <span>For Sale</span>
-                    </div>
-                    <div class="list-price">
-                        <p>$@Model.Property.Price</p>
-                    </div>
-                </div>
-                <!-- Property Content -->
-                <div class="property-content">
-                    <h5>@Model.Property.Name</h5>
-                    <p class="location"><img src="https://technext.github.io/south/img/icons/location.png" alt="">@Model.Property.Address</p>
-                    <p>@Model.Property.Description</p>
-                    <a class="btn south-btn" asp-area="" asp-controller="Properties" asp-action="Details" asp-route-id="@Model.Property.Id">View Details</a>
-                </div>
-            </div>
-        </div>
+        <partial name="_PropertiesCardPartial" model="@Model.Property" />
     </div>
 </div>

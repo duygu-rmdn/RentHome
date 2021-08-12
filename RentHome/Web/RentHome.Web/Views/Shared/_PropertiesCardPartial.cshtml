@@ -1,0 +1,24 @@
+﻿@model RentHome.Web.ViewModels.Properties.PropertiesInListViewModel
+<!-- Single Featured Property -->
+<div class="col-12 col-md-6 col-xl-4">
+    <div class="single-featured-property mb-50">
+        <!-- Property Thumbnail -->
+        <div class="property-thumb">
+            <img src="@Model.ImageUrl" alt="">
+
+            <div class="tag">
+                <span>For Sale</span>
+            </div>
+            <div class="list-price">
+                <p>$@Model.Price</p>
+            </div>
+        </div>
+        <!-- Property Content -->
+        <div class="property-content">
+            <h5>@Model.Name</h5>
+            <p class="location"><img src="https://technext.github.io/south/img/icons/location.png" alt="">@Model.Address</p>
+            <p>@Model.Description</p>
+            <a class="btn south-btn" asp-area="" asp-controller="Properties" asp-action="Details" asp-route-id="@Model.Id">View Details</a>
+        </div>
+    </div>
+</div>

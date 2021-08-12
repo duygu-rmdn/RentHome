@@ -3,18 +3,10 @@
 
 @{
     this.ViewData["Title"] = "Search";
+    var img = new SectionImg() { Name = "SEARCH", Img = "https://feed-images.rewhosting.com/trestle_idx_rets/_cloud_media/property/residential/361859004-1-o.jpg" };
 }
-<section class="breadcumb-area bg-img call-to-action-area bg-fixed bg-overlay-black" style="background-image: url(https://feed-images.rewhosting.com/trestle_idx_rets/_cloud_media/property/residential/361859004-1-o.jpg);">
-    <div class="container h-100">
-        <div class="row h-100 align-items-center">
-            <div class="col-12">
-                <div class="breadcumb-content">
-                    <h3 class="breadcumb-title">SEARCH</h3>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<partial name="_SectionImgPartial" model="img" />
+
 <div class="south-search-area">
     <div class="container">
         <div class="row">

@@ -1,18 +1,10 @@
 ﻿@model RentHome.Web.ViewModels.Rental.RequestInputModel
 @{
     this.ViewData["Title"] = "Rental";
+    var img = new SectionImg() { Name = "Request", Img = "https://www.royalshellrealestate.com/uploads/agent-386/luxury%20homes%20for%20sale%20in%20fort%20myers%20royal%20shell%20real%20estate.jpg" };
 }
-<section class="breadcumb-area bg-img call-to-action-area bg-fixed bg-overlay-black" style="background-image: url(https://www.royalshellrealestate.com/uploads/agent-386/luxury%20homes%20for%20sale%20in%20fort%20myers%20royal%20shell%20real%20estate.jpg); ">
-    <div class="container h-100">
-        <div class="row h-100 align-items-center">
-            <div class="col-12">
-                <div class="breadcumb-content">
-                    <h3 class="breadcumb-title">Request</h3>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<partial name="_SectionImgPartial" model="img" />
+
 <div class="container">
     <div class="row">
         <div class="col-12">
@@ -40,28 +32,6 @@
                 </form>
             </div>
         </div>
-        <!-- Single Featured Property -->
-        <div class="col-12 col-md-6 col-xl-4">
-            <div class="single-featured-property mb-50">
-                <!-- Property Thumbnail -->
-                <div class="property-thumb">
-                    <img src="@Model.Property.ImageUrl" alt="">
-
-                    <div class="tag">
-                        <span>For Sale</span>
-                    </div>
-                    <div class="list-price">
-                        <p>$@Model.Property.Price</p>
-                    </div>
-                </div>
-                <!-- Property Content -->
-                <div class="property-content">
-                    <h5>@Model.Property.Name</h5>
-                    <p class="location"><img src="https://technext.github.io/south/img/icons/location.png" alt="">@Model.Property.Address</p>
-                    <p>@Model.Property.Description</p>
-                    <a class="btn south-btn" asp-area="" asp-controller="Properties" asp-action="Details" asp-route-id="@Model.Property.Id">View Details</a>
-                </div>
-            </div>
-        </div>
+        <partial name="_PropertiesCardPartial" model="@Model.Property" />
     </div>
 </div>
