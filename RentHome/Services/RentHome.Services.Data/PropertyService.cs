@@ -144,6 +144,7 @@
                     OwnerFirstName = x.Owner.FirstName,
                     OwnerLastName = x.Owner.LastName,
                     OwnerUsername = x.Owner.UserName,
+                    IsPublic = x.IsPublic,
                     ImageUrls = x.Images.Select(y => "/images/properties/" + y.Id + "." + y.Extention)
                         .ToList(),
                     MenagerUsername = x.Manager.UserName,

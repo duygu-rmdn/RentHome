@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     using RentHome.Data.Common.Repositories;
     using RentHome.Data.Models;
@@ -16,9 +17,15 @@
             this.propertyRepository = propertyRepository;
         }
 
-        public void ChangeVisibility()
+        public async Task ChangeVisility(string id)
         {
-            throw new System.NotImplementedException();
+            var property = this.propertyRepository.All()
+                .Where(x => x.Id == id)
+                .FirstOrDefault();
+
+            property.IsPublic = !property.IsPublic;
+
+            await this.propertyRepository.SaveChangesAsync();
         }
 
         public IEnumerable<PropertiesInListViewModel> ShowNewProperties()

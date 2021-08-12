@@ -1,6 +1,7 @@
 ﻿@model RentHome.Web.ViewModels.Properties.SinglePropertyViewModel
-@using RentHome.Data.Models.Enums
+@using RentHome.Data.Models.Enums;
 @using System.Security.Claims;
+@using RentHome.Common;
 @{
     this.ViewData["Title"] = "Details";
 }
@@ -101,6 +102,10 @@ else if (this.TempData.ContainsKey("Reject"))
                 else
                 {
                     <a href="#" class="btn south-btn m-1">@Model.StatusName</a>
+                }
+                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                {
+                    <a asp-area="Administration" asp-controller="Properties" asp-action="ChangeVisibility" asp-route-id="@Model.Id" class="btn btn-info float-right ml-3">@(Model.IsPublic ? "Hide" : "Show")</a>
                 }
             </div>
             <div class="col-12 col-md-6 col-lg-4">

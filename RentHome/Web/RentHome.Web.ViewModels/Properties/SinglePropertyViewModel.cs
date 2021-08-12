@@ -11,7 +11,6 @@
 
         public IEnumerable<string> ImageUrls { get; set; }
 
-
         public string Name { get; set; }
 
         public string Address { get; set; }
@@ -35,6 +34,8 @@
         public string MenagerUsername { get; set; }
 
         public double AverageVote { get; set; }
+
+        public bool IsPublic { get; set; }
 
         public ContactInputModel Contact { get; set; }
 

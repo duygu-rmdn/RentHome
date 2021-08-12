@@ -1,5 +1,7 @@
 ﻿namespace RentHome.Web.Areas.Administration.Controllers
 {
+    using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Mvc;
     using RentHome.Web.Areas.Administration.Services;
     using RentHome.Web.ViewModels.Properties;
@@ -20,6 +22,13 @@
                 Properties = this.adminPropertyService.ShowNewProperties(),
             };
             return this.View(viewModel);
+        }
+
+        public async Task<IActionResult> ChangeVisibility(string id)
+        {
+            await this.adminPropertyService.ChangeVisility(id);
+
+            return this.RedirectToAction(nameof(this.Index));
         }
     }
 }

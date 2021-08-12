@@ -1,6 +1,7 @@
 ﻿namespace RentHome.Web.Areas.Administration.Services
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     using RentHome.Web.ViewModels.Properties;
 
@@ -8,6 +9,6 @@
     {
         IEnumerable<PropertiesInListViewModel> ShowNewProperties();
 
-        void ChangeVisibility();
+        Task ChangeVisility(string id);
     }
 }
