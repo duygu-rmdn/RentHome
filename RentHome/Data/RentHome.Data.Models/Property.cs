@@ -62,6 +62,8 @@
 
         public virtual City City { get; set; }
 
+        public bool IsPublic { get; set; }
+
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 
         public bool IsDeleted { get; set; }
