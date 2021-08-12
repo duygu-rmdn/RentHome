@@ -11,13 +11,6 @@
         @this.TempData["Edit"]
     </div>
 }
-else if (this.TempData.ContainsKey("Create"))
-{
-    <div class="alert alert-success alert-dismissible fade show mb-0">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        @this.TempData["Create"]
-    </div>
-}
 else if (this.TempData.ContainsKey("Approve"))
 {
     <div class="alert alert-success alert-dismissible fade show mb-0">

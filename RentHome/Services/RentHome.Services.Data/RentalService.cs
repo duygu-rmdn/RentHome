@@ -122,7 +122,7 @@
 
         public PropertiesInListViewModel GetProperty(string id)
             => this.propertyRepository.All()
-                .Where(x => x.IsDeleted == false && x.Id == id)
+                .Where(x => x.IsDeleted == false && x.IsPublic == true && x.Id == id)
                 .Select(x => new PropertiesInListViewModel
                 {
                     Id = x.Id,

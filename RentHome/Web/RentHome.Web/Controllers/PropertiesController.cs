@@ -128,14 +128,9 @@
                 return this.View(input);
             }
 
-            string propertyId = this.propertyRepository.All()
-                .Where(x => x.Address == input.Address)
-                .Select(x => x.Id)
-                .FirstOrDefault();
+            this.TempData["Create"] = "You have successfully created a property and your property is awaiting inspection!";
 
-            this.TempData["Create"] = "You have successfully created a property";
-
-            return this.Redirect($"/Properties/Details/{propertyId}");
+            return this.Redirect("/");
         }
 
         public IActionResult All(int id = 1)

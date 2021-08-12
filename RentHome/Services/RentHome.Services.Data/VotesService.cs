@@ -17,7 +17,9 @@
 
         public async Task SetVoteAsync(string propertyId, string userId, byte value)
         {
-            var vote = this.votesRepository.All().FirstOrDefault(x => x.PropertyId == propertyId && x.UserId == userId);
+            var vote = this.votesRepository.All()
+                .FirstOrDefault(x => x.PropertyId == propertyId && x.UserId == userId);
+
             if (vote == null)
             {
                 vote = new Vote

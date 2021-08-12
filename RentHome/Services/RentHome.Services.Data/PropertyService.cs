@@ -76,7 +76,7 @@
         public IEnumerable<PropertiesInListViewModel> GetAll(int page, int itemsPerPage = 12)
             => this.propertyRepository
                 .AllAsNoTracking()
-                .Where(x => x.IsDeleted == false)
+                .Where(x => x.IsDeleted == false && x.IsPublic == true)
                 .OrderByDescending(x => x.CreatedOn)
                 .Skip((page - 1) * itemsPerPage)
                 .Take(itemsPerPage)
@@ -107,13 +107,13 @@
 
         public int GetCount()
             => this.propertyRepository.All()
-                    .Where(x => x.IsDeleted == false)
+                    .Where(x => x.IsDeleted == false && x.IsPublic == true)
                     .Count();
 
         public IEnumerable<PropertiesInListViewModel> GetRandom(int count)
             => this.propertyRepository
                 .All()
-                .Where(x => x.IsDeleted == false)
+                .Where(x => x.IsDeleted == false && x.IsPublic == true)
                 .OrderBy(x => Guid.NewGuid())
                 .Take(count)
                 .Select(x => new PropertiesInListViewModel
@@ -165,7 +165,8 @@
                     && x.Status == input.Status
                     && x.CityId == input.CityId
                     && x.City.CountryId == input.CountryId
-                    && x.IsDeleted == false)
+                    && x.IsDeleted == false
+                    && x.IsPublic == true)
                 .OrderByDescending(x => x.CreatedOn)
                 .Select(x => new PropertiesInListViewModel
                 {
