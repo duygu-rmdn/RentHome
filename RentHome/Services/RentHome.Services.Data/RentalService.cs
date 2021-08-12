@@ -42,18 +42,11 @@
 
         public async Task ApproveAsync(string propertyId, string requestId)
         {
-            var property = this.propertyRepository.All()
-                .Where(x => x.Id == propertyId)
-                .FirstOrDefault();
+            var property = this.GetPropertyById(propertyId);
 
-            var request = this.requestRepository.All()
-               .Where(x => x.Id == requestId)
-               .FirstOrDefault();
+            var request = this.GetRequestById(requestId);
 
-            var userEmail = this.requestRepository.All()
-               .Where(x => x.Id == requestId)
-               .Select(x => x.ApplicationUser.Email)
-               .FirstOrDefault();
+            var userEmail = this.GetUserEmail(requestId);
 
             if (property.Status == PropertyStatus.ToManage)
             {
@@ -69,9 +62,7 @@
                 throw new Exception();
             }
 
-            this.requestRepository.All()
-                .Where(x => x.Id == requestId)
-                .FirstOrDefault()
+            this.GetRequestById(requestId)
                 .Status = RequestStatus.Approved;
 
             var rental = new Rental()
@@ -102,21 +93,15 @@
 
         public async Task<ContractViewModel> GetContractInfoAsync(string propertyId, string requestId)
         {
-            var request = this.requestRepository.All()
-                .Where(x => x.Id == requestId)
-                .FirstOrDefault();
+            var request = this.GetRequestById(requestId);
 
             var rental = this.rentalRepository.All()
                 .Where(x => x.PropertyId == propertyId && request.PropertyId == propertyId)
                 .FirstOrDefault();
 
-            var property = this.propertyRepository.All()
-                .Where(x => x.Id == request.PropertyId)
-                .FirstOrDefault();
+            var property = this.GetPropertyById(propertyId);
 
-            var contract = this.contractRepository.All()
-                .Where(x => x.Id == rental.ContractId)
-                .FirstOrDefault();
+            var contract = this.GetContractById(rental.ContractId);
 
             var owner = await this.userManager.FindByIdAsync(property.OwnerId);
             var tenant = await this.userManager.FindByIdAsync(rental.TenantId);
@@ -136,9 +121,7 @@
         }
 
         public PropertiesInListViewModel GetProperty(string id)
-        {
-            var property = this.propertyRepository
-                .All()
+            => this.propertyRepository.All()
                 .Where(x => x.IsDeleted == false && x.Id == id)
                 .Select(x => new PropertiesInListViewModel
                 {
@@ -151,12 +134,8 @@
                     ImageUrl = "/images/properties/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extention,
                 }).FirstOrDefault();
 
-            return property;
-        }
-
         public IEnumerable<MyPropertyRequestsViewModel> MyPropertyRequests(string propertyId)
-        {
-            var requests = this.requestRepository.All()
+            => this.requestRepository.All()
                 .Where(x => x.PropertyId == propertyId)
                 .OrderBy(x => x.Status)
                 .Select(x => new MyPropertyRequestsViewModel
@@ -171,22 +150,17 @@
                     Message = x.Message,
                 }).ToList();
 
-            return requests;
-        }
-
         public async Task RejectedAsync(string id)
         {
-            this.requestRepository.All().Where(x => x.Id == id).FirstOrDefault().Status = RequestStatus.Rejected;
+            this.GetRequestById(id)
+                .Status = RequestStatus.Rejected;
 
             var property = this.requestRepository.All()
                 .Where(x => x.Id == id)
                 .Select(x => x.Property)
                 .FirstOrDefault();
 
-            var userEmail = this.requestRepository.All()
-               .Where(x => x.Id == id)
-               .Select(x => x.ApplicationUser.Email)
-               .FirstOrDefault();
+            var userEmail = this.GetUserEmail(id);
 
             var subject = "Rejected request";
             var html = "Your request for " + property.Name + " is rejected";
@@ -218,5 +192,26 @@
             await this.requestRepository.AddAsync(request);
             await this.requestRepository.SaveChangesAsync();
         }
+
+        public Request GetRequestById(string requestId)
+            => this.requestRepository.All()
+               .Where(x => x.Id == requestId)
+               .FirstOrDefault();
+
+        public Property GetPropertyById(string propertyId)
+            => this.propertyRepository.All()
+                .Where(x => x.Id == propertyId)
+                .FirstOrDefault();
+
+        public Contract GetContractById(string contractId)
+            => this.contractRepository.All()
+                .Where(x => x.Id == contractId)
+                .FirstOrDefault();
+
+        public string GetUserEmail(string id)
+            => this.requestRepository.All()
+               .Where(x => x.Id == id)
+               .Select(x => x.ApplicationUser.Email)
+               .FirstOrDefault();
     }
 }

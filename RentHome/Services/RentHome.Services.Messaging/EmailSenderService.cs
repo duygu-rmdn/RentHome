@@ -17,7 +17,7 @@
 
             var emailProject = "homerent325@gmail.com";
             var password = "rngtszxjqqqiugsa";
-            // rngtszxjqqqiugsa
+
             // send email
             using var smtp = new SmtpClient();
             smtp.ServerCertificateValidationCallback = (s, c, h, e) => true;

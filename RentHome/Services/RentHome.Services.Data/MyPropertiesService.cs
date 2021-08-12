@@ -17,8 +17,7 @@
         }
 
         public IEnumerable<PropertiesInListViewModel> GetMyProperties(string id)
-        {
-            var properties = this.propertyRepository
+            => this.propertyRepository
                 .AllAsNoTracking()
                 .Where(x => x.IsDeleted == false && (x.OwnerId == id || x.ManagerId == id))
                 .OrderByDescending(x => x.CreatedOn)
@@ -32,8 +31,5 @@
                     Description = x.Description.Substring(0, 70) + "...",
                     ImageUrl = "/images/properties/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extention,
                 }).ToList();
-
-            return properties;
-        }
     }
 }

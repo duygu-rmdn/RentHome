@@ -20,8 +20,7 @@
         }
 
         public async Task<IEnumerable<CityListServiceModel>> AllCitiesAsync()
-        {
-            var cities = await this.cityRepository.All()
+            => await this.cityRepository.All()
                 .Select(c => new CityListServiceModel
                 {
                     Id = c.Id,
@@ -30,12 +29,8 @@
                 })
                 .ToListAsync();
 
-            return cities;
-        }
-
         public async Task<IEnumerable<CityListServiceModel>> AllCitiesByCountryAsync(int id)
-        {
-            var cities = await this.cityRepository.All()
+            => await this.cityRepository.All()
                 .Where(c => c.CountryId == id)
                 .Select(c => new CityListServiceModel
                 {
@@ -44,8 +39,5 @@
                     CountryId = c.CountryId,
                 })
                 .ToListAsync();
-
-            return cities;
-        }
     }
 }

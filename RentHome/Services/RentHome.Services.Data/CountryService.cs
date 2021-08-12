@@ -19,16 +19,12 @@
         }
 
         public async Task<IEnumerable<CountryListServiceModel>> AllCountriesAsync()
-        {
-            var countries = await this.countryRepsitory.All()
+            => await this.countryRepsitory.All()
                 .Select(c => new CountryListServiceModel
                 {
                     Id = c.Id,
                     Name = c.Name,
                 })
                 .ToListAsync();
-
-            return countries;
-        }
     }
 }
