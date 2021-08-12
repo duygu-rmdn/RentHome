@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -12,7 +13,6 @@
     using RentHome.Data.Common.Repositories;
     using RentHome.Data.Models;
     using RentHome.Services.Data;
-    using RentHome.Web.ViewModels.ContactUs;
     using RentHome.Web.ViewModels.Properties;
 
     public class PropertiesController : BaseController
@@ -65,9 +65,26 @@
         [HttpPost]
         public async Task<IActionResult> Edit(string id, EditPropertyInputModel input)
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var ownerId = this.propertyRepository.All()
+                .Where(x => x.Id == id)
+                .Select(x => x.OwnerId)
+                .FirstOrDefault();
+
+            var managerId = this.propertyRepository.All()
+                .Where(x => x.Id == id)
+                .Select(x => x.ManagerId)
+                .FirstOrDefault();
+
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
+            }
+
+            if (userId != ownerId && userId != managerId)
+            {
+                return this.BadRequest();
             }
 
             await this.propertyService.UpdateAsync(id, input);

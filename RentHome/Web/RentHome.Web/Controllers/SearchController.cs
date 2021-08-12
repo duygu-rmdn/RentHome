@@ -4,7 +4,6 @@
 
     using Microsoft.AspNetCore.Mvc;
     using RentHome.Services.Data;
-    using RentHome.Web.ViewModels.Properties;
     using RentHome.Web.ViewModels.Search;
 
     public class SearchController : BaseController
