@@ -10,6 +10,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using RentHome.Common;
     using RentHome.Data.Common.Repositories;
     using RentHome.Data.Models;
     using RentHome.Services.Data;
@@ -82,7 +83,7 @@
                 return this.View(input);
             }
 
-            if (userId != ownerId && userId != managerId)
+            if (userId != ownerId && userId != managerId && !this.User.IsInRole(GlobalConstants.AdministratorRoleName))
             {
                 return this.BadRequest();
             }

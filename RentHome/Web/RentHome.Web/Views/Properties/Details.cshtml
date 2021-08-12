@@ -78,7 +78,7 @@ else if (this.TempData.ContainsKey("Reject"))
                         <span id="starsForRate4" class="fa fa-star @if (3.5 <= Model.AverageVote) { <text>checked</text>}" data-vote="4"></span>
                         <span id="starsForRate5" class="fa fa-star @if (4.5 <= Model.AverageVote) { <text>checked</text>}" data-vote="5"></span>
                         <span id="averageVoteValue">@Model.AverageVote.ToString("0.0")</span><span> / 5</span>
-                        @if (this.User.Identity.IsAuthenticated && (this.User.FindFirstValue(ClaimTypes.Name) == Model.OwnerUsername || this.User.FindFirstValue(ClaimTypes.Name) == Model.MenagerUsername))
+                        @if (this.User.FindFirstValue(ClaimTypes.Name) == Model.OwnerUsername || this.User.FindFirstValue(ClaimTypes.Name) == Model.MenagerUsername || this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                         {
                             <span class="single-meta">
                                 <a asp-controller="Properties" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
@@ -91,13 +91,17 @@ else if (this.TempData.ContainsKey("Reject"))
                     <p>@Model.Description</p>
                 </div>
                 <h4>Caregory: @Model.CaregoryName</h4>
+                @if (this.User.FindFirstValue(ClaimTypes.Name) == Model.OwnerUsername)
+                {
+                    <h3>@(Model.IsPublic ? "Public" : "Non-public")</h3>
+                }
                 @if (Model.StatusName == Enum.GetName(typeof(PropertyStatus), 3) || Model.StatusName == Enum.GetName(typeof(PropertyStatus), 4))
                 {
                     <a href="#" class="btn south-btn m-1 active">@Model.StatusName</a>
                 }
                 else if (Model.StatusName == Enum.GetName(typeof(PropertyStatus), 1) || Model.StatusName == Enum.GetName(typeof(PropertyStatus), 2))
                 {
-                    <a asp-controller="Rental" asp-action="Index" asp-route-id="@Model.Id" class="btn south-btn m-1">@Model.StatusName</a>
+                    <a asp-controller="Rental" asp-action="Index" asp-route-id="@Model.Id" class="btn south-btn m-1  @if (!Model.IsPublic) { <text>disabled</text>} ">@Model.StatusName</a>
                 }
                 else
                 {
@@ -189,8 +193,8 @@ else if (this.TempData.ContainsKey("Reject"))
                     <th scope="col">
                         @if (request.Status == RequestStatus.NA)
                         {
-                            <a asp-controller="Rental" asp-action="Approve" asp-route-propertyId="@Model.Id" asp-route-requestId="@request.Id" class="btn btn-primary @if (Model.StatusName == PropertyStatus.Rented.ToString() || Model.StatusName == PropertyStatus.Managed.ToString()) { <text>disabled</text>} ">Approve</a>
-                            <a asp-controller="Rental" asp-action="Rejected" asp-route-id="@request.Id" asp-route-propertyId="@Model.Id" class="btn btn-danger">Rejected</a>
+                            <a asp-controller="Rental" asp-action="Approve" asp-route-propertyId="@Model.Id" asp-route-requestId="@request.Id" class="btn btn-primary @if (Model.StatusName == PropertyStatus.Rented.ToString() || Model.StatusName == PropertyStatus.Managed.ToString() || !Model.IsPublic) { <text>disabled</text>} ">Approve</a>
+                            <a asp-controller="Rental" asp-action="Rejected" asp-route-id="@request.Id" asp-route-propertyId="@Model.Id" class="btn btn-danger  @if (!Model.IsPublic) { <text>disabled</text>} ">Rejected</a>
                         }
                         @if (request.Status == RequestStatus.Rejected)
                         {
@@ -199,7 +203,7 @@ else if (this.TempData.ContainsKey("Reject"))
                         @if (request.Status == RequestStatus.Approved)
                         {
                             <a href="#" class="btn south-btn m-1 active">Approved</a>
-                            <a asp-controller="Rental" asp-action="Contract" asp-route-propertyId="@Model.Id" asp-route-requestId="@request.Id" class="btn btn-primary">View Contract</a>
+                            <a asp-controller="Rental" asp-action="Contract" asp-route-propertyId="@Model.Id" asp-route-requestId="@request.Id" class="btn btn-primary @if (!Model.IsPublic) { <text>disabled</text>} ">View Contract</a>
                         }
                     </th>
                 </tr>
