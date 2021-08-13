@@ -1,13 +1,9 @@
 ﻿namespace RentHome.Services.Data.Tests
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
-    using Moq;
     using RentHome.Data;
-    using RentHome.Data.Common.Repositories;
     using RentHome.Data.Models;
     using RentHome.Data.Repositories;
     using Xunit;

@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="6.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.6" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
     <PackageReference Include="Moq" Version="4.16.1" />
@@ -29,6 +30,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\RentHome.Data\RentHome.Data.csproj" />
     <ProjectReference Include="..\..\Services\RentHome.Services.Data\RentHome.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Web\RentHome.Web\RentHome.Web.csproj" />
   </ItemGroup>
 
 </Project>
