@@ -28,6 +28,15 @@
   <li>13+ views</li>
 </lu>
 
+<h2>Testing</h2>
+<p>The web project contains:</p>
+<lu>
+  <li>8+ unit tests</li>
+  <li>10+ integration tests</li>
+  <li>20+ controllers tests with MyTested.AspNetCore.Mvc</li>
+</lu>
+<p>Tests cover over 65% of business logic.</p>
+
 <h2>Features</h2>
 <p>This web platform allows a guest to the website to view and find listings by city, country, min and/or max price or explore by category or listing status.</p>
 <p>A guest can also contact the support of the website. In order to send requests to the owners of the listings, a guest must be registered and signed in.</p>
