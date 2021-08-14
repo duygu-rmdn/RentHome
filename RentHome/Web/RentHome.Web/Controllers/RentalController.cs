@@ -1,10 +1,13 @@
 ﻿namespace RentHome.Web.Controllers
 {
+    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using RentHome.Data.Common.Repositories;
+    using RentHome.Data.Models;
     using RentHome.Services.Data;
     using RentHome.Web.ViewModels.Rental;
 
@@ -51,6 +54,7 @@
             return this.Redirect("/");
         }
 
+        [Authorize]
         public async Task<IActionResult> Approve(string propertyId, string requestId)
         {
             await this.rentalService.ApproveAsync(propertyId, requestId);
@@ -60,6 +64,7 @@
             return this.RedirectToAction("Details", "Properties", new { id = propertyId });
         }
 
+        [Authorize]
         public async Task<IActionResult> Rejected(string id, string propertyId)
         {
             await this.rentalService.RejectedAsync(id);

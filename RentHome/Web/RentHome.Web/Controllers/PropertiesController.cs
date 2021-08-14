@@ -95,6 +95,7 @@
             return this.RedirectToAction(nameof(this.Details), new { id });
         }
 
+        [Authorize]
         public async Task<IActionResult> Create()
         {
             var cities = await this.cityService.AllCitiesAsync();
@@ -110,6 +111,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create(CreatePropertyInputModel input)
         {
             if (!this.ModelState.IsValid)
@@ -179,7 +181,7 @@
 
             this.TempData["Delete"] = "You have successfully deleted a property!";
 
-            return this.RedirectToAction(nameof(this.All));
+            return this.Redirect("/Properties/All/1");
         }
     }
 }
