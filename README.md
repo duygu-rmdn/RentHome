@@ -33,7 +33,7 @@
 <lu>
   <li>8+ unit tests</li>
   <li>10+ integration tests</li>
-  <li>22+ controllers tests with MyTested.AspNetCore.Mvc</li>
+  <li>24+ controllers tests with MyTested.AspNetCore.Mvc</li>
 </lu>
 <p>Tests cover over 65% of business logic.</p>
 
