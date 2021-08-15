@@ -39,6 +39,12 @@
         public const int SubjectMinLenght = 10;
         public const int SubjectMaxLenght = 50;
 
+        public const int CityMinLenght = 2;
+        public const int CityMaxLenght = 30;
+
+        public const int CountryMinLenght = 2;
+        public const int CountryMaxLenght = 30;
+
         // TempData and Messages
         public const string TitleTooLong = "The title must be less than {1} characters long";
     }

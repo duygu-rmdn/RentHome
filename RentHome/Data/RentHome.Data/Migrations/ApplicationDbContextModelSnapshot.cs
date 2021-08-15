@@ -719,7 +719,8 @@ namespace RentHome.Data.Migrations
 
                     b.HasOne("RentHome.Data.Models.ApplicationUser", "User")
                         .WithMany("Votes")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Property");
 

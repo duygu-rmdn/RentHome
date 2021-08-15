@@ -6,15 +6,23 @@
 
     using RentHome.Data.Common.Repositories;
     using RentHome.Data.Models;
+    using RentHome.Web.ViewModels.Administration.Location;
     using RentHome.Web.ViewModels.Properties;
 
     public class AdminPropertyService : IAdminPropertyService
     {
         private readonly IRepository<Property> propertyRepository;
+        private readonly IRepository<City> cityRepository;
+        private readonly IRepository<Country> countryRepostory;
 
-        public AdminPropertyService(IRepository<Property> propertyRepository)
+        public AdminPropertyService(
+            IRepository<Property> propertyRepository,
+            IRepository<City> cityRepository,
+            IRepository<Country> countryRepostory)
         {
             this.propertyRepository = propertyRepository;
+            this.cityRepository = cityRepository;
+            this.countryRepostory = countryRepostory;
         }
 
         public async Task ChangeVisility(string id)
@@ -26,6 +34,28 @@
             property.IsPublic = !property.IsPublic;
 
             await this.propertyRepository.SaveChangesAsync();
+        }
+
+        public async Task AddCityWithCountry(LocationIndexFormModel input)
+        {
+            var country = this.countryRepostory.All()
+                .Where(x => x.Name == input.Country)
+                .FirstOrDefault();
+
+            var city = new City
+            {
+                Name = input.City,
+                Country = country ?? new Country
+                {
+                    Name = input.Country,
+                    Code = input.CountryCode,
+                },
+            };
+
+            await this.cityRepository.AddAsync(city);
+
+            await this.cityRepository.SaveChangesAsync();
+            await this.countryRepostory.SaveChangesAsync();
         }
 
         public IEnumerable<PropertiesInListViewModel> ShowNewProperties()

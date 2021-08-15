@@ -1,0 +1,48 @@
+﻿@model RentHome.Web.ViewModels.Administration.Location.LocationIndexFormModel
+@{
+    this.ViewData["Title"] = "Add location";
+    var img = new SectionImg() { Name = "Add location", Img = "https://i.pinimg.com/564x/f6/e6/51/f6e651d0a8bcb4f0c0c1f1ef5482b86b.jpg" };
+}
+<partial name="_SectionImgPartial" model="img" />
+<div class="south-search-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="advanced-search-form">
+                    <!-- Search Title -->
+                    <div class="search-title">
+                        <p>Search for your home</p>
+                    </div>
+                    <!-- Search Form -->
+                    <form asp-action="Index" method="post" id="advanceSearch">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="row">
+
+                            <div class="col-12 col-md-4 col-lg-3">
+                                <div class="form-group">
+                                    <input class="form-control" asp-for="City" placeholder="City">
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4 col-lg-3">
+                                <div class="form-group">
+                                    <input class="form-control" asp-for="Country" placeholder="Country">
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4 col-lg-3">
+                                <div class="form-group">
+                                    <input class="form-control" asp-for="CountryCode" placeholder="Country Code">
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-0">
+                                <button type="submit" class="btn south-btn">Add</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

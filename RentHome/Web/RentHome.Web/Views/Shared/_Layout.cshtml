@@ -47,7 +47,10 @@
                         @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="Administration" asp-controller="Properties" asp-action="Index">ChangeVisibility</a>
+                                <a class="nav-link text-light" asp-area="Administration" asp-controller="Properties" asp-action="Index">Visibility</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="Administration" asp-controller="Location" asp-action="Index">Add Location</a>
                             </li>
                         }
                     </ul>
