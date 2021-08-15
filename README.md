@@ -1,5 +1,5 @@
 <h1>RentHome</h1>
-<h2>ABOUT my web project:</h2>
+<h2>ABOUT the web project</h2>
 <ul>
   <li>RentHome is an online platform for renting and managing properties. Owners can list their properties for long-term rental and/or find long-term management solutions.</li>
   <li>The platform meets owners, potential tenants and potential property managers. Quite often, the owners don't live close to all their properties. They could even live in another country. Managing their properties scattered everywhere, is a challenge.</li>
