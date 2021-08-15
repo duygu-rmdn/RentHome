@@ -127,8 +127,8 @@
             }
             catch (Exception ex)
             {
-                this.ModelState.AddModelError(string.Empty, ex.Message);
-                return this.View(input);
+                this.TempData["CreateFailed"] = "Failed to create property, allowed photo extensions are \"jpg\", \"png\", \"gif\"!";
+                return this.Redirect("/");
             }
 
             this.TempData["Create"] = "You have successfully created a property and your property is awaiting inspection!";

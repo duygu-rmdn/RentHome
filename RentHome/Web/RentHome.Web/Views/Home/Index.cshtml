@@ -23,6 +23,13 @@ else if (this.TempData.ContainsKey("Create"))
         @this.TempData["Create"]
     </div>
 }
+else if (this.TempData.ContainsKey("CreateFailed"))
+{
+    <div class="alert alert-danger alert-dismissible fade show mb-0">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        @this.TempData["CreateFailed"]
+    </div>
+}
 
 else if (this.TempData.ContainsKey("Location"))
 {
