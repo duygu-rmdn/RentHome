@@ -23,9 +23,9 @@
 <h2>Backend</h2>
 <p>The web project contains:</p>
 <lu>
-  <li>28+ service methods</li>
-  <li>8 controllers</li>
-  <li>13+ views</li>
+  <li>29+ service methods</li>
+  <li>10+ controllers</li>
+  <li>14+ views</li>
 </lu>
 
 <h2>Testing</h2>
