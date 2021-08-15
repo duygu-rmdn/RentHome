@@ -64,6 +64,7 @@
 <p>There is also an <b>Admin</b> who can:</p>
 <ul>
   <li>reviews the uploaded properties and approves/disapproves them</li>
+  <li>add new cities and countries to the database</li>
 </ul>
 <h2>Technologies Used</h2>
 <p>This website is designed and runs using the main technologies below:</p>
