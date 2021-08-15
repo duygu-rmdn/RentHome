@@ -78,7 +78,7 @@ else if (this.TempData.ContainsKey("Reject"))
                         <span id="starsForRate4" class="fa fa-star @if (3.5 <= Model.AverageVote) { <text>checked</text>}" data-vote="4"></span>
                         <span id="starsForRate5" class="fa fa-star @if (4.5 <= Model.AverageVote) { <text>checked</text>}" data-vote="5"></span>
                         <span id="averageVoteValue">@Model.AverageVote.ToString("0.0")</span><span> / 5</span>
-                        @if (this.User.FindFirstValue(ClaimTypes.Name) == Model.OwnerUsername || this.User.FindFirstValue(ClaimTypes.Name) == Model.MenagerUsername || this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                        @if ((this.User.FindFirstValue(ClaimTypes.Name) == Model.OwnerUsername || this.User.FindFirstValue(ClaimTypes.Name) == Model.MenagerUsername || this.User.IsInRole(GlobalConstants.AdministratorRoleName)) && this.User.Identity.IsAuthenticated)
                         {
                             <span class="single-meta">
                                 <a asp-controller="Properties" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
