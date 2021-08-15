@@ -30,6 +30,8 @@
 
             await this.service.AddCityWithCountry(input);
 
+            this.TempData["Location"] = "You have successfully created a new location!";
+
             return this.Redirect("/");
         }
     }

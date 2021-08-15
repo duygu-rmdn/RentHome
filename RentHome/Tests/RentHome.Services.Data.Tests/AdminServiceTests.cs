@@ -19,10 +19,12 @@
         {
             var list = new List<Property>();
             var mockRepo = new Mock<IRepository<Property>>();
+            var cityMockRepo = new Mock<IRepository<City>>();
+            var countryMockRepo = new Mock<IRepository<Country>>();
             mockRepo.Setup(x => x.All()).Returns(list.AsQueryable());
             mockRepo.Setup(x => x.AddAsync(It.IsAny<Property>())).Callback((Property property) => list.Add(property));
 
-            var service = new AdminPropertyService(mockRepo.Object);
+            var service = new AdminPropertyService(mockRepo.Object, cityMockRepo.Object, countryMockRepo.Object);
 
             var property = new Property
             {

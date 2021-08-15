@@ -23,6 +23,14 @@ else if (this.TempData.ContainsKey("Create"))
         @this.TempData["Create"]
     </div>
 }
+
+else if (this.TempData.ContainsKey("Location"))
+{
+    <div class="alert alert-success alert-dismissible fade show mb-0">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        @this.TempData["Location"]
+    </div>
+}
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
