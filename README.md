@@ -78,7 +78,6 @@
   <li>HTML5</li>
   <li>CSS</li>
   <li>MS Visual Studio 2019</li>
-  <li>MSSQL Server</li>
   <li>Theme - Locals by Colorlib</li>
   <li>MailKit 2.14.0 (Email sender by Google)</li>
   <li>AJAX real-time Requests</li>
